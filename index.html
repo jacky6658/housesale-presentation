@@ -1758,7 +1758,54 @@ document.addEventListener('touchend', (e) => {
     }
 }, { passive: true });
 
+// Mobile responsive fix - JS forced
+function applyMobileStyles() {
+    if (window.innerWidth <= 768) {
+        // Force all grids to single column
+        document.querySelectorAll('.grid-2, .grid-3, .grid-4').forEach(el => {
+            if (!el.closest('.flow-diagram')) {
+                el.style.display = 'block';
+                Array.from(el.children).forEach(child => {
+                    child.style.marginBottom = '10px';
+                });
+            }
+        });
+
+        // Force inline grid elements to single column
+        document.querySelectorAll('[style*="grid-template-columns"]').forEach(el => {
+            if (!el.classList.contains('compare-table') && !el.closest('.flow-diagram')) {
+                el.style.display = 'block';
+                Array.from(el.children).forEach(child => {
+                    child.style.marginBottom = '10px';
+                });
+            }
+        });
+
+        // Payment flow: keep 2x2 grid
+        document.querySelectorAll('.flow-diagram .grid-4').forEach(el => {
+            el.style.display = 'grid';
+            el.style.gridTemplateColumns = '1fr 1fr';
+            el.style.gap = '8px';
+        });
+
+        // Slide padding
+        document.querySelectorAll('.slide').forEach(el => {
+            el.style.padding = '20px 15px 60px 15px';
+        });
+
+        // Scale down all text proportionally
+        document.body.style.fontSize = '14px';
+
+        // Fix pricing card scale
+        document.querySelectorAll('[style*="transform: scale"]').forEach(el => {
+            el.style.transform = 'none';
+        });
+    }
+}
+
 // Initialize
+applyMobileStyles();
+window.addEventListener('resize', applyMobileStyles);
 showSlide(0);
 </script>
 
