@@ -20,13 +20,89 @@
 
         .slide {
             min-height: 100vh;
+            height: 100vh;
             padding: 60px 80px;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             background: white;
-            margin-bottom: 2px;
+            overflow-y: auto;
             page-break-after: always;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Slide transition */
+        .slide-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Navigation arrows */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(0,0,0,0.6);
+        }
+
+        .nav-arrow.left {
+            left: 15px;
+        }
+
+        .nav-arrow.right {
+            right: 15px;
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.2;
+            cursor: default;
+        }
+
+        /* Slide counter */
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+        }
+
+        /* Progress bar */
+        .slide-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: #2b6cb0;
+            z-index: 101;
+            transition: width 0.3s ease;
         }
 
         .slide-cover {
@@ -511,7 +587,22 @@
         @media (max-width: 768px) {
             .slide {
                 padding: 30px 20px;
-                min-height: auto;
+                height: 100vh;
+                min-height: 100vh;
+            }
+
+            .nav-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 1.1em;
+            }
+
+            .nav-arrow.left {
+                left: 8px;
+            }
+
+            .nav-arrow.right {
+                right: 8px;
             }
 
             h1 {
@@ -1614,32 +1705,69 @@
     </div>
 </div>
 
+<!-- Navigation UI -->
+<button class="nav-arrow left" id="prevBtn" onclick="goSlide(-1)">&#8249;</button>
+<button class="nav-arrow right" id="nextBtn" onclick="goSlide(1)">&#8250;</button>
+<div class="slide-counter" id="counter"></div>
+<div class="slide-progress" id="progress"></div>
+
 <script>
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
+const total = slides.length;
 
+function showSlide(index) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[index].classList.add('active');
+    slides[index].scrollTop = 0;
+
+    document.getElementById('counter').textContent = (index + 1) + ' / ' + total;
+    document.getElementById('progress').style.width = ((index + 1) / total * 100) + '%';
+    document.getElementById('prevBtn').disabled = index === 0;
+    document.getElementById('nextBtn').disabled = index === total - 1;
+}
+
+function goSlide(dir) {
+    const next = currentSlide + dir;
+    if (next >= 0 && next < total) {
+        currentSlide = next;
+        showSlide(currentSlide);
+    }
+}
+
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ') {
-        if (currentSlide < slides.length - 1) {
-            currentSlide++;
-            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
-        }
-    } else if (e.key === 'ArrowLeft') {
-        if (currentSlide > 0) {
-            currentSlide--;
-            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
-        }
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        goSlide(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        goSlide(-1);
     }
 });
 
-document.addEventListener('click', (e) => {
-    if (e.clientY > window.innerHeight / 2) {
-        if (currentSlide < slides.length - 1) {
-            currentSlide++;
-            slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
-        }
+// Touch swipe support
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+document.addEventListener('touchend', (e) => {
+    const deltaX = e.changedTouches[0].screenX - touchStartX;
+    const deltaY = e.changedTouches[0].screenY - touchStartY;
+
+    // Only trigger if horizontal swipe is dominant
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX < 0) goSlide(1);  // Swipe left = next
+        if (deltaX > 0) goSlide(-1); // Swipe right = prev
     }
-});
+}, { passive: true });
+
+// Initialize
+showSlide(0);
 </script>
 
 </body>
