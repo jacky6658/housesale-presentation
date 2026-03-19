@@ -585,188 +585,165 @@
         }
 
         @media (max-width: 768px) {
+            /* Core slide layout */
             .slide {
-                padding: 30px 20px;
-                height: 100vh;
+                padding: 20px 15px;
+                height: auto;
                 min-height: 100vh;
+                justify-content: flex-start;
+                padding-top: 25px;
+                padding-bottom: 60px;
             }
 
+            /* Navigation */
             .nav-arrow {
-                width: 36px;
-                height: 36px;
-                font-size: 1.1em;
-            }
-
-            .nav-arrow.left {
-                left: 8px;
-            }
-
-            .nav-arrow.right {
-                right: 8px;
-            }
-
-            h1 {
-                font-size: 2em;
-                margin-bottom: 15px;
-            }
-
-            h2 {
-                font-size: 1.6em;
-                margin-bottom: 20px;
-                padding-bottom: 10px;
-            }
-
-            h3 {
-                font-size: 1.3em;
-                margin: 15px 0 10px 0;
-            }
-
-            .subtitle {
-                font-size: 1.1em;
-                margin-bottom: 15px;
-            }
-
-            .grid-2, .grid-3, .grid-4 {
-                grid-template-columns: 1fr;
-                gap: 15px;
-                margin: 15px 0;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            ul li {
+                width: 32px;
+                height: 32px;
                 font-size: 1em;
-                padding: 8px 0;
-                padding-left: 28px;
+                top: auto;
+                bottom: 18px;
+                transform: none;
             }
 
-            table {
+            .nav-arrow.left { left: 15px; }
+            .nav-arrow.right { right: 15px; }
+
+            .slide-counter {
+                bottom: 22px;
+                font-size: 0.75em;
+                padding: 4px 12px;
+            }
+
+            .slide-progress { height: 2px; }
+
+            /* Typography */
+            h1 { font-size: 1.6em; margin-bottom: 10px; }
+            h2 { font-size: 1.3em; margin-bottom: 12px; padding-bottom: 8px; border-bottom-width: 3px; }
+            h3 { font-size: 1.1em; margin: 10px 0 8px 0; }
+            h4 { font-size: 1em; }
+            .subtitle { font-size: 0.95em; margin-bottom: 10px; }
+
+            /* Grid - all single column */
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+                margin: 10px 0 !important;
+            }
+
+            /* Cards */
+            .card { padding: 15px; }
+
+            /* Lists */
+            ul li {
+                font-size: 0.9em;
+                padding: 5px 0;
+                padding-left: 22px;
+            }
+
+            ul li:before { font-size: 1.1em; }
+
+            /* Tables */
+            table { font-size: 0.7em; margin: 8px 0; }
+            table th { padding: 6px 4px; font-size: 0.75em; }
+            table td { padding: 5px 4px; }
+
+            /* Big numbers */
+            .big-number { font-size: 2em; }
+
+            /* Mockup */
+            .mockup { padding: 8px; }
+            .mockup-header { padding: 8px 10px; font-size: 0.85em; margin-bottom: 8px; }
+            .mockup-content { padding: 10px; font-size: 0.8em; line-height: 1.6; }
+
+            /* CTA box */
+            .cta-box { padding: 15px; margin: 10px 0; }
+            .cta-box h3 { font-size: 1.1em !important; margin-bottom: 10px !important; }
+
+            /* Flow diagram */
+            .flow-diagram { padding: 10px; margin: 8px 0; }
+            .flow-step { padding: 10px; margin: 8px 0; }
+            .flow-arrow { font-size: 1.5em; margin: 5px 0; }
+
+            /* Badges */
+            .badge { font-size: 0.65em; padding: 2px 6px; margin: 2px; }
+
+            /* Price tags */
+            .price-tag, .price-tag-green { font-size: 1em; padding: 6px 12px; }
+
+            /* ROI */
+            .roi-highlight { padding: 10px; }
+            .roi-highlight h3 { font-size: 1.1em !important; }
+
+            /* Cover slide specifics */
+            .slide-cover h2 { font-size: 1.1em !important; margin-bottom: 15px !important; }
+            .slide-cover .subtitle { font-size: 0.85em !important; }
+            .slide-cover div[style*="margin-top: 60px"] { margin-top: 25px !important; }
+            .slide-cover div[style*="padding: 20px 40px"] { padding: 12px 18px !important; }
+            .slide-cover p[style*="font-size: 1.3em"] { font-size: 1em !important; }
+            .slide-cover p[style*="font-size: 1.1em"] { font-size: 0.9em !important; }
+
+            /* Pricing card - remove scale */
+            .card[style*="transform: scale"] { transform: none !important; }
+
+            /* Screenshot grid - single column */
+            div[style*="grid-template-columns: 1fr 1fr; gap: 20px"] {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            /* Inline font-size overrides */
+            *[style*="font-size: 1.4em"] { font-size: 1em !important; }
+            *[style*="font-size: 1.3em"] { font-size: 1em !important; }
+            *[style*="font-size: 1.2em"] { font-size: 0.95em !important; }
+            *[style*="font-size: 1.8em"] { font-size: 1.2em !important; }
+            *[style*="font-size: 2em"] { font-size: 1.4em !important; }
+            *[style*="font-size: 2.5em"] { font-size: 1.6em !important; }
+            *[style*="font-size: 3em"] { font-size: 1.8em !important; }
+            *[style*="font-size: 3.5em"] { font-size: 2em !important; }
+            *[style*="font-size: 4em"] { font-size: 2.2em !important; }
+
+            /* Inline padding overrides */
+            *[style*="padding: 40px"] { padding: 15px !important; }
+            *[style*="padding: 30px"] { padding: 12px !important; }
+            *[style*="padding: 25px"] { padding: 12px !important; }
+
+            /* Inline margin overrides */
+            *[style*="margin-top: 40px"] { margin-top: 15px !important; }
+            *[style*="margin-top: 30px"] { margin-top: 12px !important; }
+
+            /* Pain items */
+            .pain-item { padding: 12px; }
+            .pain-item h4 { font-size: 0.95em; margin-bottom: 5px; }
+            .pain-item p { font-size: 0.85em !important; }
+
+            /* Comparison table */
+            .compare-table { font-size: 0.7em !important; }
+            .compare-table td span { display: none; }
+            .compare-table th span { font-size: 0.75em !important; }
+            .compare-table td { font-size: 0.85em; }
+
+            /* Image captions in screenshot page */
+            div[style*="background: #1a365d"] {
+                padding: 8px 10px !important;
                 font-size: 0.8em;
             }
 
-            table th, table td {
-                padding: 8px 6px;
+            /* Payment flow - 2x2 grid on mobile */
+            .flow-diagram .grid-4 {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
             }
 
-            .big-number {
-                font-size: 2.5em;
-            }
-
-            .mockup {
-                padding: 10px;
-            }
-
-            .mockup-content {
-                padding: 12px;
-                font-size: 0.85em;
-            }
-
-            .cta-box {
-                padding: 20px;
-                margin: 15px 0;
-            }
-
-            .cta-box h3 {
-                font-size: 1.3em !important;
-            }
-
-            .flow-diagram {
-                padding: 15px;
-            }
-
-            .flow-step {
-                padding: 12px;
-            }
-
-            .price-tag, .price-tag-green {
-                font-size: 1.2em;
-                padding: 8px 15px;
-            }
-
-            .badge {
-                font-size: 0.75em;
-                padding: 3px 8px;
-            }
-
-            .roi-highlight {
-                padding: 15px;
-            }
-
-            .roi-highlight h3 {
-                font-size: 1.3em !important;
-            }
-
-            /* Cover slide */
-            .slide-cover h2 {
-                font-size: 1.3em !important;
-                margin-bottom: 20px !important;
-            }
-
-            /* Pricing card scale fix */
-            .card[style*="transform: scale"] {
-                transform: none !important;
-            }
-
-            /* Screenshot grid */
-            div[style*="grid-template-columns: 1fr 1fr; gap: 20px"] {
+            .flow-diagram .grid-3 {
                 grid-template-columns: 1fr !important;
             }
 
-            /* Fix inline styles that break mobile */
-            .slide-cover div[style*="padding: 20px 40px"] {
-                padding: 15px 20px !important;
-            }
+            /* Service commitment page */
+            .card h4 { font-size: 0.9em; }
 
-            div[style*="font-size: 1.4em"] {
-                font-size: 1.1em !important;
-            }
-
-            div[style*="font-size: 4em"] {
-                font-size: 2.5em !important;
-            }
-
-            div[style*="font-size: 3em"] {
-                font-size: 2em !important;
-            }
-
-            div[style*="font-size: 1.8em"] {
-                font-size: 1.3em !important;
-            }
-
-            /* Flow diagram grid on mobile */
-            .flow-diagram .grid-3,
-            .flow-diagram .grid-4 {
-                grid-template-columns: 1fr;
-            }
-
-            /* Payment flow - 2 columns on mobile */
-            .flow-diagram .grid-4 {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            /* Comparison table mobile */
-            .compare-table {
-                font-size: 0.75em !important;
-            }
-
-            .compare-table td span {
-                display: none;
-            }
-
-            .compare-table th span {
-                font-size: 0.8em !important;
-            }
-
-            .pain-item {
-                padding: 15px;
-            }
-
-            .pain-item h4 {
-                font-size: 1.1em;
-            }
+            /* Fix overflow */
+            body { overflow-x: hidden; }
+            .slide { overflow-x: hidden; }
         }
     </style>
 </head>
