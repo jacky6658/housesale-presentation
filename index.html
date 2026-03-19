@@ -623,11 +623,24 @@
             h4 { font-size: 1em; }
             .subtitle { font-size: 0.95em; margin-bottom: 10px; }
 
-            /* Grid - all single column */
-            .grid-2, .grid-3, .grid-4 {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
-                margin: 10px 0 !important;
+            /* Grid - force single column on mobile */
+            .grid-2, .grid-3, .grid-4,
+            div.grid-2, div.grid-3, div.grid-4,
+            .slide .grid-2, .slide .grid-3, .slide .grid-4 {
+                display: block !important;
+            }
+
+            .grid-2 > *, .grid-3 > *, .grid-4 > * {
+                margin-bottom: 10px !important;
+            }
+
+            /* Inline grid overrides */
+            [style*="grid-template-columns"] {
+                display: block !important;
+            }
+
+            [style*="grid-template-columns"] > * {
+                margin-bottom: 10px !important;
             }
 
             /* Cards */
@@ -728,14 +741,16 @@
                 font-size: 0.8em;
             }
 
-            /* Payment flow - 2x2 grid on mobile */
+            /* Payment flow - restore grid for 2x2 */
             .flow-diagram .grid-4 {
+                display: grid !important;
                 grid-template-columns: 1fr 1fr !important;
                 gap: 8px !important;
             }
 
-            .flow-diagram .grid-3 {
-                grid-template-columns: 1fr !important;
+            /* Comparison table - restore grid for columns */
+            .compare-table {
+                display: table !important;
             }
 
             /* Service commitment page */
