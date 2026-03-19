@@ -488,6 +488,20 @@
             border: 3px solid #f39c12;
         }
 
+        /* Comparison table styles */
+        .compare-table tr:hover td {
+            background: #e8f4f8 !important;
+        }
+
+        .compare-table td:nth-child(3) {
+            background: #fff5f5;
+        }
+
+        /* Dark slide checkmark fix */
+        .slide-dark ul li:before {
+            color: #ffe66d;
+        }
+
         @media print {
             .slide {
                 page-break-after: always;
@@ -640,6 +654,27 @@
             .flow-diagram .grid-4 {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
+            }
+
+            /* Comparison table mobile */
+            .compare-table {
+                font-size: 0.75em !important;
+            }
+
+            .compare-table td span {
+                display: none;
+            }
+
+            .compare-table th span {
+                font-size: 0.8em !important;
+            }
+
+            .pain-item {
+                padding: 15px;
+            }
+
+            .pain-item h4 {
+                font-size: 1.1em;
             }
         }
     </style>
@@ -958,89 +993,85 @@
     </div>
 </div>
 
-<!-- 第 5.5 頁：報價明細 -->
+<!-- 第 5.5 頁：報價明細比較表 -->
 <div class="slide">
-    <h2>報價功能明細（專業版）</h2>
-    <p class="subtitle">NT$268,000 一次性建置費 — 包含以下所有功能模組</p>
+    <h2>方案功能比較</h2>
+    <p class="subtitle">一眼看出兩個方案的差異</p>
 
-    <table style="font-size: 0.95em;">
+    <table style="font-size: 0.95em;" class="compare-table">
         <tr>
-            <th>功能模組</th>
-            <th>說明</th>
-            <th>包含</th>
+            <th style="width: 45%;">功能</th>
+            <th style="width: 27.5%; text-align: center; background: #2b6cb0;">標準版<br><span style="font-weight: 400; font-size: 0.85em;">NT$168,000</span></th>
+            <th style="width: 27.5%; text-align: center; background: #c0392b;">專業版（推薦）<br><span style="font-weight: 400; font-size: 0.85em;">NT$268,000</span></th>
         </tr>
         <tr>
-            <td><strong>591 自動監控模組</strong></td>
-            <td>指定區域屋主自售物件自動爬取，定時自動掃描，新物件即時偵測</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+            <td><strong>591 自動監控</strong><br><span style="color: #666; font-size: 0.85em;">定時自動掃描，新物件即時偵測</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60;">&#10003;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
         <tr>
-            <td><strong>多平台 AI 分析模組</strong></td>
-            <td>Facebook 社團 / PTT 房版 / 樂屋網貼文轉貼到 Telegram Bot，AI 即時評分分析</td>
-            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+            <td><strong>AI 智能評分引擎</strong><br><span style="color: #666; font-size: 0.85em;">急迫度、屋主類型、成交機率 0-100 分</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60;">&#10003;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
         <tr>
-            <td><strong>AI 智能評分引擎</strong></td>
-            <td>Claude AI 深度語意分析，判斷急迫度、屋主類型、成交機率，0-100 分評分</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+            <td><strong>Telegram 即時推播 + 追蹤提醒</strong><br><span style="color: #666; font-size: 0.85em;">每日推播高分物件，到期自動提醒</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60;">&#10003;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
         <tr>
-            <td><strong>AI 話術建議產生器</strong></td>
-            <td>針對每個物件自動生成電話/簡訊/LINE 建議話術，根據你提供的成功範例產生類似風格</td>
-            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+            <td><strong>Google Sheets CRM</strong><br><span style="color: #666; font-size: 0.85em;">物件自動寫入、狀態追蹤、零手動輸入</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60;">&#10003;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
         <tr>
-            <td><strong>Telegram 即時推播</strong></td>
-            <td>每日自動推播高分物件，追蹤到期自動提醒</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+            <td><strong>系統部署 + 教育訓練</strong><br><span style="color: #666; font-size: 0.85em;">環境建置、API 串接、操作教學 + 文件</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60;">&#10003;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
-        <tr>
-            <td><strong>Google Sheets CRM</strong></td>
-            <td>物件資料自動寫入、狀態追蹤、跟進日期管理，零手動輸入</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        <tr style="background: #fef5e7;">
+            <td><strong>多平台 AI 分析（FB/PTT/樂屋網）</strong><br><span style="color: #666; font-size: 0.85em;">轉貼即評分，10 秒內回覆</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #ccc;">&#10007;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
-        <tr>
-            <td><strong>多區域監控</strong></td>
-            <td>同時監控最多 5 個區域的 591 物件</td>
-            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        <tr style="background: #fef5e7;">
+            <td><strong>AI 話術建議產生器</strong><br><span style="color: #666; font-size: 0.85em;">電話/簡訊/LINE，根據你的範例產生類似風格</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #ccc;">&#10007;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
-        <tr>
-            <td><strong>每週物件彙整報告</strong></td>
-            <td>AI 自動彙整本週新物件數量、價格區間、值得關注的物件摘要</td>
-            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        <tr style="background: #fef5e7;">
+            <td><strong>多區域監控</strong><br><span style="color: #666; font-size: 0.85em;">同時監控最多 5 個區域的 591 物件</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #ccc;">&#10007;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
-        <tr>
-            <td><strong>客製化篩選條件</strong></td>
-            <td>依價格、坪數、房屋類型、關鍵字等條件精準篩選</td>
-            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        <tr style="background: #fef5e7;">
+            <td><strong>每週物件彙整報告</strong><br><span style="color: #666; font-size: 0.85em;">本週新物件數量、價格區間、重點摘要</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #ccc;">&#10007;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
-        <tr>
-            <td><strong>系統部署與環境建置</strong></td>
-            <td>OpenClaw 環境安裝、API 串接、Telegram Bot 設定、Google Sheets 設定</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
-        </tr>
-        <tr>
-            <td><strong>教育訓練</strong></td>
-            <td>到府或遠端操作教學 1-2 小時，含操作文件交付</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        <tr style="background: #fef5e7;">
+            <td><strong>客製化篩選條件</strong><br><span style="color: #666; font-size: 0.85em;">價格、坪數、房屋類型、關鍵字</span></td>
+            <td style="text-align: center; font-size: 1.5em; color: #ccc;">&#10007;</td>
+            <td style="text-align: center; font-size: 1.5em; color: #27ae60; background: #fff5f5;">&#10003;</td>
         </tr>
         <tr>
             <td><strong>技術支援</strong></td>
-            <td>標準版 14 天 / 專業版 2 個月，工作日遠端協助</td>
-            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+            <td style="text-align: center;"><strong>14 天</strong></td>
+            <td style="text-align: center; background: #fff5f5;"><strong style="color: #e74c3c;">2 個月</strong></td>
         </tr>
     </table>
 
-    <div class="grid-2" style="margin-top: 20px;">
-        <div style="background: #e8f4f8; padding: 20px; border-radius: 12px; text-align: center;">
+    <div class="grid-2" style="margin-top: 25px;">
+        <div style="background: #e8f4f8; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #2b6cb0;">
             <strong style="font-size: 1.2em; color: #2b6cb0;">標準版</strong><br>
             <span style="font-size: 2em; font-weight: 700; color: #2b6cb0;">NT$168,000</span><br>
-            <span style="color: #666;">6 個核心模組</span>
+            <span style="color: #666;">5 個核心功能</span>
         </div>
-        <div style="background: #fde8e8; padding: 20px; border-radius: 12px; text-align: center;">
-            <strong style="font-size: 1.2em; color: #e74c3c;">專業版（推薦）</strong><br>
+        <div style="background: #fde8e8; padding: 20px; border-radius: 12px; text-align: center; border: 3px solid #e74c3c; position: relative;">
+            <div style="position: absolute; top: -12px; right: 15px; background: #e74c3c; color: white; padding: 3px 12px; border-radius: 15px; font-size: 0.8em; font-weight: 700;">推薦</div>
+            <strong style="font-size: 1.2em; color: #e74c3c;">專業版</strong><br>
             <span style="font-size: 2em; font-weight: 700; color: #e74c3c;">NT$268,000</span><br>
-            <span style="color: #666;">全部 12 個模組</span>
+            <span style="color: #666;">全部 10 個功能 + 更長支援</span>
         </div>
     </div>
 </div>
