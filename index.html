@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 自主業務員系統 - 技術提案</title>
+    <title>AI 房仲智能助理 - 技術提案</title>
     <style>
         * {
             margin: 0;
@@ -68,12 +68,12 @@
             color: white;
             border-bottom-color: white;
         }
-        
+
         .slide-accent h2 {
             color: #880e4f;
             border-bottom-color: #ad1457;
         }
-        
+
         .slide-green h2 {
             color: #2c3e50;
             border-bottom-color: #16a085;
@@ -88,11 +88,11 @@
         .slide-dark h3 {
             color: #ecf0f1;
         }
-        
+
         .slide-accent h3 {
             color: #ad1457;
         }
-        
+
         .slide-green h3 {
             color: #16a085;
         }
@@ -106,11 +106,11 @@
         .slide-cover .subtitle, .slide-dark .subtitle {
             color: rgba(255,255,255,0.9);
         }
-        
+
         .slide-accent .subtitle {
             color: #34495e;
         }
-        
+
         .slide-green .subtitle {
             color: #34495e;
         }
@@ -147,12 +147,12 @@
             background: rgba(255,255,255,0.1);
             color: white;
         }
-        
+
         .slide-accent .card {
             background: white;
             color: #2c3e50;
         }
-        
+
         .slide-green .card {
             background: white;
             color: #2c3e50;
@@ -196,11 +196,11 @@
         .slide-dark .big-number {
             color: white;
         }
-        
+
         .slide-accent .big-number {
             color: #ad1457;
         }
-        
+
         .slide-green .big-number {
             color: #16a085;
         }
@@ -218,7 +218,7 @@
         }
 
         ul li:before {
-            content: "✓";
+            content: "\2713";
             position: absolute;
             left: 0;
             color: #27ae60;
@@ -254,7 +254,6 @@
             background: #e8f4f8;
         }
 
-        /* 深色背景的表格樣式 */
         .slide-dark table td {
             color: white;
             border-bottom: 1px solid rgba(255,255,255,0.2);
@@ -267,8 +266,7 @@
         .slide-dark table tr:hover {
             background: rgba(255,255,255,0.1);
         }
-        
-        /* slide-accent 表格使用深色文字 */
+
         .slide-accent table td {
             color: #2c3e50;
         }
@@ -467,6 +465,29 @@
             margin-top: 0;
         }
 
+        .pain-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #e74c3c;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        }
+
+        .pain-item h4 {
+            color: #e74c3c;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .roi-highlight {
+            background: linear-gradient(135deg, #ffe66d 0%, #f9ca24 100%);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 20px 0;
+            border: 3px solid #f39c12;
+        }
+
         @media print {
             .slide {
                 page-break-after: always;
@@ -478,1036 +499,913 @@
 
 <!-- 第 1 頁：封面 -->
 <div class="slide slide-cover">
-    <h1>AI 自主業務員系統</h1>
-    <h2 style="border: none; font-size: 2em; margin-bottom: 50px;">從探索到成交的全自動閉環</h2>
+    <h1>AI 房仲智能助理</h1>
+    <h2 style="border: none; font-size: 2em; margin-bottom: 50px;">24 小時自動盯盤，高價值物件即時推播</h2>
     <div class="subtitle">基於 OpenClaw Autonomous Agent 架構</div>
-    <div style="margin-top: 80px;">
-        <p style="font-size: 1.3em;">提案對象：Jacky Chen</p>
-        <p style="font-size: 1.1em; margin-top: 20px;">日期：2026-02-25</p>
+    <div style="margin-top: 60px;">
+        <div style="display: inline-block; background: rgba(255,255,255,0.15); padding: 20px 40px; border-radius: 12px;">
+            <p style="font-size: 1.3em;">提案對象：Jacky Chen</p>
+            <p style="font-size: 1.1em; margin-top: 10px;">日期：2026-02-25</p>
+        </div>
     </div>
 </div>
 
-<!-- 第 2 頁：客戶需求分析 -->
+<!-- 第 2 頁：你的痛點 -->
 <div class="slide">
-    <h2>客戶需求分析</h2>
-    
-    <div class="requirement-box">
-        <h3>🎯 核心訴求</h3>
-        <p style="font-size: 1.2em; line-height: 1.8;">
-            「我不希望限制系統只能在 591 或特定社團運作。<br>
-            我希望這套 AI 就像網路上看到的 Clawbot 範例一樣——<br>
-            當我給出一個『開發潛在售屋客戶』的目標時，<br>
-            <strong>她能自己思考去哪裡找資料、自己判斷哪些是高價值目標，<br>
-            並主動執行後續的觸及動作。</strong>」
-        </p>
-    </div>
+    <h2>你每天是不是這樣？</h2>
 
-    <h3 style="margin-top: 40px;">4 大核心需求</h3>
-    
     <div class="grid-2">
-        <div class="card">
-            <h3 style="color: #2b6cb0;">1️⃣ 自主探索（Autonomous Exploration）</h3>
-            <ul style="font-size: 1em;">
-                <li>不設限監控範圍</li>
-                <li>AI 自己決定去哪找客戶</li>
-                <li>自主判斷平台價值</li>
-                <li>動態調整搜尋策略</li>
-            </ul>
-            <div style="margin-top: 15px; padding: 15px; background: #e8f4f8; border-radius: 8px; font-size: 0.95em;">
-                <strong>範例：</strong><br>
-                系統自己搜尋「竹山 賣屋」→ 發現 Facebook 社團 → 自動加入監控
-            </div>
+        <div class="pain-item">
+            <h4>早上打開 591，好物件已經被打了 10 通電話</h4>
+            <p style="font-size: 1.1em; color: #666;">別人凌晨就在刷，你永遠慢一步。誰先接觸屋主，誰就拿到委託。</p>
         </div>
 
-        <div class="card">
-            <h3 style="color: #2b6cb0;">2️⃣ 智能判斷（AI Reasoning）</h3>
-            <ul style="font-size: 1em;">
-                <li>自己判斷高價值目標</li>
-                <li>區分急售 vs 觀望</li>
-                <li>評估客戶意願強度</li>
-                <li>預測成交機率</li>
-            </ul>
-            <div style="margin-top: 15px; padding: 15px; background: #e8f4f8; border-radius: 8px; font-size: 0.95em;">
-                <strong>範例：</strong><br>
-                看到「急售透天」→ 判斷：高價值（85 分）→ 優先觸及
-            </div>
+        <div class="pain-item">
+            <h4>Facebook 社團貼文太多，真正屋主自售的淹沒在裡面</h4>
+            <p style="font-size: 1.1em; color: #666;">一個社團一天幾十篇，大部分是廣告和仲介互貼，手動一篇篇看根本來不及篩選。</p>
         </div>
 
-        <div class="card">
-            <h3 style="color: #2b6cb0;">3️⃣ 自動對話（Auto Engagement）</h3>
-            <ul style="font-size: 1em;">
-                <li>主動發送開發訊息</li>
-                <li>自動回覆客戶問題</li>
-                <li>維持多輪對話</li>
-                <li>判斷最佳切入點</li>
-            </ul>
-            <div style="margin-top: 15px; padding: 15px; background: #e8f4f8; border-radius: 8px; font-size: 0.95em;">
-                <strong>範例：</strong><br>
-                發現賣屋貼文 → 自動留言「您好，請問這間房子還在嗎？」
-            </div>
+        <div class="pain-item">
+            <h4>花時間整理客戶名單，卻記不住誰該追蹤</h4>
+            <p style="font-size: 1.1em; color: #666;">手動抄在筆記本、LINE 記事本，三天後就忘了張小姐說要考慮到什麼時候。</p>
         </div>
 
-        <div class="card">
-            <h3 style="color: #2b6cb0;">4️⃣ 成交閉環（Sales Funnel）</h3>
-            <ul style="font-size: 1em;">
-                <li>從發現到成交全流程</li>
-                <li>自動篩選有意願名單</li>
-                <li>建立 CRM 系統</li>
-                <li>提醒跟進時機</li>
-            </ul>
-            <div style="margin-top: 15px; padding: 15px; background: #e8f4f8; border-radius: 8px; font-size: 0.95em;">
-                <strong>範例：</strong><br>
-                整理高意願客戶 → Telegram 通知「張小姐該跟進了」
-            </div>
+        <div class="pain-item">
+            <h4>重複做低價值的瀏覽和篩選，擠壓談判時間</h4>
+            <p style="font-size: 1.1em; color: #666;">你最值錢的時間應該花在帶看和談判，不是坐在電腦前滑網頁。</p>
         </div>
     </div>
 
     <div class="cta-box" style="margin-top: 40px;">
-        <h3>💡 關鍵差異</h3>
-        <div style="font-size: 1.3em; margin-top: 20px;">
-            ❌ 不是「自動化腳本」（固定流程、寫死邏輯）<br>
-            ✅ 是「AI 業務員」（自己思考、自己執行、自己學習）
+        <h3 style="font-size: 1.8em;">如果有個 AI 助理...</h3>
+        <div style="font-size: 1.4em; margin-top: 20px; line-height: 2;">
+            24 小時自動盯 591 + Facebook 公開社團<br>
+            AI 自動判斷哪些是高價值物件<br>
+            每天早上 Telegram 推播給你：「今天這 3 個值得打電話」
         </div>
     </div>
 </div>
 
-<!-- 第 3 頁：OpenClaw 解決方案 -->
+<!-- 第 3 頁：成品展示 - 你每天會收到什麼 -->
+<div class="slide slide-dark">
+    <h2>你每天會收到這些</h2>
+
+    <div class="grid-2">
+        <!-- 左側：Telegram 推播 -->
+        <div>
+            <h3 style="color: white;">Telegram 每日推播</h3>
+            <div class="mockup">
+                <div class="mockup-header">AI 房仲助理 - 每日報告</div>
+                <div class="mockup-content">
+                    <strong>【2026-02-25 今日高價值物件】</strong><br><br>
+
+                    今天監控到 <span class="highlight-blue">23 個新物件</span>，<br>
+                    AI 篩選出 <span class="highlight">3 個值得聯繫</span>：<br><br>
+
+                    <div style="background: #d5f4e6; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>1. 竹山鎮延平路 3F 透天</strong><br>
+                        來源：591 屋主自售<br>
+                        開價：800 萬<br>
+                        AI 評分：<span class="badge badge-success">92 分</span><br>
+                        判斷：<span style="color: #e74c3c; font-weight: 700;">急售 - 標題含「急」、價格低於行情 15%</span><br>
+                        建議：今天就打電話
+                    </div>
+
+                    <div style="background: #fef5e7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>2. 竹山鎮集山路 2 房公寓</strong><br>
+                        來源：Facebook「竹山房屋買賣」公開社團<br>
+                        開價：520 萬<br>
+                        AI 評分：<span class="badge badge-warning">75 分</span><br>
+                        判斷：屋主自售、描述提到「搬家」<br>
+                        建議：可以打電話了解
+                    </div>
+
+                    <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>3. 竹山鎮農地 500 坪</strong><br>
+                        來源：591<br>
+                        AI 評分：<span class="badge badge-info">68 分</span><br>
+                        判斷：刊登超過 30 天、可能願意降價<br>
+                        建議：適合談委託
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右側：AI 話術建議 -->
+        <div>
+            <h3 style="color: white;">AI 話術建議產生器</h3>
+            <div class="mockup">
+                <div class="mockup-header">針對「延平路透天」的建議話術</div>
+                <div class="mockup-content">
+                    <strong>【電話版】</strong><br>
+                    <div style="background: #e8f4f8; padding: 12px; border-radius: 8px; margin: 8px 0; font-size: 0.95em;">
+                        「您好，我是 XX 不動產的 Jacky，看到您在 591 刊登延平路的透天，想請問目前還有在出售嗎？我手上剛好有幾位客戶在找竹山的透天...」
+                    </div>
+
+                    <strong>【Facebook 私訊版】</strong><br>
+                    <div style="background: #d5f4e6; padding: 12px; border-radius: 8px; margin: 8px 0; font-size: 0.95em;">
+                        「您好，看到您在社團的貼文，想了解一下這間房子的狀況。我在竹山從事不動產多年，方便聊聊嗎？」
+                    </div>
+
+                    <strong>【LINE 版】</strong><br>
+                    <div style="background: #fef5e7; padding: 12px; border-radius: 8px; margin: 8px 0; font-size: 0.95em;">
+                        「您好，我是竹山在地的房仲 Jacky。看到您有出售的需求，我可以免費幫您評估市場行情，有興趣的話隨時可以聊聊。」
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: #fff3cd; border-radius: 8px;">
+                        <strong>AI 提醒：</strong>這位屋主標題寫「急售」，建議強調「快速成交」和「買方資源」，不要一開始就談價格。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 第 4 頁：成品展示 - CRM -->
 <div class="slide slide-green">
-    <h2>OpenClaw 解決方案</h2>
-    
-    <div style="background: rgba(22, 160, 133, 0.15); padding: 30px; border-radius: 12px; margin-bottom: 40px; border: 2px solid #16a085;">
-        <h3 style="color: #16a085; text-align: center; font-size: 2em;">✅ 我們已經有所有需要的工具</h3>
-        <p style="text-align: center; font-size: 1.3em; margin-top: 15px; color: #2c3e50;">
-            OpenClaw 本身就是 Autonomous Agent 框架<br>
-            不需要從頭開發，只需「組合 + 調校」
+    <h2>自動追蹤，不漏接任何機會</h2>
+
+    <h3>Google Sheets CRM 自動更新</h3>
+    <p style="font-size: 1.2em; color: #34495e; margin-bottom: 20px;">所有監控到的物件自動記錄，不用手動輸入</p>
+
+    <table>
+        <tr>
+            <th>物件</th>
+            <th>來源</th>
+            <th>屋主</th>
+            <th>AI 評分</th>
+            <th>狀態</th>
+            <th>下次追蹤</th>
+            <th>備註</th>
+        </tr>
+        <tr>
+            <td><strong>延平路透天</strong></td>
+            <td>591</td>
+            <td>張小姐</td>
+            <td><span class="badge badge-success">92</span></td>
+            <td>已約看屋</td>
+            <td>明天 14:00</td>
+            <td>急需資金，可議價</td>
+        </tr>
+        <tr>
+            <td><strong>集山路公寓</strong></td>
+            <td>FB 社團</td>
+            <td>李先生</td>
+            <td><span class="badge badge-warning">75</span></td>
+            <td>已聯繫</td>
+            <td>2/28</td>
+            <td>等貸款結清</td>
+        </tr>
+        <tr>
+            <td><strong>農地 500 坪</strong></td>
+            <td>591</td>
+            <td>王太太</td>
+            <td><span class="badge badge-info">68</span></td>
+            <td>待聯繫</td>
+            <td>本週內</td>
+            <td>刊登超過 30 天</td>
+        </tr>
+        <tr>
+            <td><strong>前山路華廈</strong></td>
+            <td>FB 社團</td>
+            <td>陳先生</td>
+            <td><span class="badge badge-warning">71</span></td>
+            <td>已聯繫</td>
+            <td>3/2</td>
+            <td>考慮中，有其他仲介接洽</td>
+        </tr>
+        <tr>
+            <td><strong>社寮路透天</strong></td>
+            <td>591</td>
+            <td>林小姐</td>
+            <td><span class="badge badge-success">88</span></td>
+            <td>待聯繫</td>
+            <td>今天</td>
+            <td>剛刊登 2 小時，屋主自售</td>
+        </tr>
+    </table>
+
+    <div class="grid-3" style="margin-top: 30px;">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 2.5em; margin-bottom: 10px;">24hr</div>
+            <strong style="font-size: 1.2em; color: #16a085;">全天候監控</strong><br>
+            <span style="color: #34495e;">凌晨新刊登的物件也不漏</span>
+        </div>
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 2.5em; margin-bottom: 10px;">AI</div>
+            <strong style="font-size: 1.2em; color: #16a085;">智能評分</strong><br>
+            <span style="color: #34495e;">從文字判斷急迫度和成交機率</span>
+        </div>
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 2.5em; margin-bottom: 10px;">0 秒</div>
+            <strong style="font-size: 1.2em; color: #16a085;">手動輸入時間</strong><br>
+            <span style="color: #34495e;">所有資料自動寫入 Google Sheets</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px; background: rgba(22, 160, 133, 0.15); padding: 25px; border-radius: 12px; border: 2px solid #16a085;">
+        <h3 style="color: #16a085; text-align: center;">Telegram 追蹤提醒</h3>
+        <p style="text-align: center; font-size: 1.2em; color: #2c3e50; margin-top: 10px;">
+            系統自動檢查追蹤日期，時間到了就推播提醒：<br>
+            <strong>「張小姐（延平路透天）今天該跟進了，上次她說考慮到這週」</strong>
         </p>
     </div>
-
-    <h3>現有資源對應表</h3>
-    
-    <table>
-        <tr>
-            <th>客戶需求</th>
-            <th>OpenClaw 現有工具</th>
-            <th>實現方式</th>
-        </tr>
-        <tr>
-            <td><strong>1️⃣ 自主探索</strong></td>
-            <td>
-                • web_search（搜尋平台）<br>
-                • agent-browser（自動操作網頁）<br>
-                • sessions_spawn（創建探索 sub-agent）
-            </td>
-            <td>
-                Sub-agent 自己搜尋「竹山 賣屋」<br>
-                → 找到 Facebook 社團<br>
-                → 自動加入並監控
-            </td>
-        </tr>
-        <tr>
-            <td><strong>2️⃣ 智能判斷</strong></td>
-            <td>
-                • Claude Opus（高階 LLM）<br>
-                • subagents（管理多個判斷任務）<br>
-                • memory（學習歷史數據）
-            </td>
-            <td>
-                每個貼文問 Claude Opus：<br>
-                「這是急售嗎？價值幾分？」<br>
-                → AI 評分 0-100
-            </td>
-        </tr>
-        <tr>
-            <td><strong>3️⃣ 自動對話</strong></td>
-            <td>
-                • agent-browser（操作 Messenger）<br>
-                • message（Telegram Bot）<br>
-                • wacli（WhatsApp 發送）
-            </td>
-            <td>
-                agent-browser 打開 Messenger<br>
-                → Claude 生成個性化訊息<br>
-                → 自動發送並回覆
-            </td>
-        </tr>
-        <tr>
-            <td><strong>4️⃣ 成交閉環</strong></td>
-            <td>
-                • gog sheets（CRM 系統）<br>
-                • cron（定期提醒）<br>
-                • message（Telegram 通知）
-            </td>
-            <td>
-                gog sheets 記錄客戶狀態<br>
-                → Cron 檢查「3 天後追蹤」<br>
-                → Telegram 提醒 Jacky
-            </td>
-        </tr>
-    </table>
-
-    <div style="margin-top: 40px; background: rgba(22, 160, 133, 0.15); padding: 30px; border-radius: 12px; text-align: center; border: 2px solid #16a085;">
-        <h3 style="color: #16a085; font-size: 1.8em;">🚀 關鍵優勢</h3>
-        <div class="grid-2" style="margin-top: 20px; text-align: left; color: #2c3e50;">
-            <div>
-                <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
-                <strong style="font-size: 1.2em; color: #2c3e50;">技術成熟</strong><br>
-                <span style="color: #34495e;">OpenClaw 已驗證（HR 招募系統實際案例）</span>
-            </div>
-            <div>
-                <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
-                <strong style="font-size: 1.2em; color: #2c3e50;">開發快速</strong><br>
-                <span style="color: #34495e;">4-5 週交付 vs 傳統 10-12 週</span>
-            </div>
-            <div>
-                <div style="font-size: 2em; margin-bottom: 10px;">💰</div>
-                <strong style="font-size: 1.2em; color: #2c3e50;">成本合理</strong><br>
-                <span style="color: #34495e;">不用從頭開發框架</span>
-            </div>
-        </div>
-    </div>
 </div>
 
-<!-- 第 4 頁：技術架構 -->
-<div class="slide">
-    <h2>技術架構：Sub-agent 編排</h2>
-    
-    <div class="flow-diagram">
-        <div class="flow-step">
-            <h3 style="color: #2b6cb0; margin: 0;">Main Session（主控）</h3>
-            <p>給出目標：「去網路上找竹山賣屋客戶」</p>
-        </div>
-        
-        <div class="flow-arrow">↓</div>
-        
-        <div class="flow-step">
-            <h3 style="color: #2b6cb0; margin: 0;">Cron 觸發器</h3>
-            <p>每天 09:00 自動執行 sessions_spawn</p>
-        </div>
-        
-        <div class="flow-arrow">↓</div>
-        
-        <div class="grid-2" style="gap: 20px;">
-            <div class="flow-step">
-                <h3 style="color: #27ae60; margin: 0;">🔍 探索者 Sub-agent</h3>
-                <ul style="font-size: 0.95em; margin: 10px 0;">
-                    <li>web_search 找平台</li>
-                    <li>agent-browser 加入社團</li>
-                    <li>更新監控清單（gog sheets）</li>
-                </ul>
-                <div class="badge badge-success">自主探索</div>
-            </div>
-            
-            <div class="flow-step">
-                <h3 style="color: #3498db; margin: 0;">🎯 監控者 Sub-agent</h3>
-                <ul style="font-size: 0.95em; margin: 10px 0;">
-                    <li>agent-browser 爬貼文</li>
-                    <li>Claude Opus 判斷價值</li>
-                    <li>篩選高價值客戶</li>
-                </ul>
-                <div class="badge badge-info">智能判斷</div>
-            </div>
-            
-            <div class="flow-step">
-                <h3 style="color: #f39c12; margin: 0;">💬 溝通者 Sub-agent</h3>
-                <ul style="font-size: 0.95em; margin: 10px 0;">
-                    <li>agent-browser 發訊息</li>
-                    <li>Claude Opus 生成回覆</li>
-                    <li>判斷客戶意願</li>
-                </ul>
-                <div class="badge badge-warning">自動對話</div>
-            </div>
-            
-            <div class="flow-step">
-                <h3 style="color: #e74c3c; margin: 0;">📊 整理者 Sub-agent</h3>
-                <ul style="font-size: 0.95em; margin: 10px 0;">
-                    <li>gog sheets 更新 CRM</li>
-                    <li>Cron 追蹤提醒</li>
-                    <li>Telegram 通知 Jacky</li>
-                </ul>
-                <div class="badge badge-danger">成交閉環</div>
-            </div>
-        </div>
-        
-        <div class="flow-arrow">↓</div>
-        
-        <div class="flow-step" style="background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white;">
-            <h3 style="color: white; margin: 0;">🎯 結果交付</h3>
-            <p style="color: white;">Telegram 通知 Jacky：「今天找到 5 位高意願客戶，請跟進」</p>
-        </div>
-    </div>
-
-    <div style="margin-top: 30px; padding: 25px; background: #e8f4f8; border-radius: 12px;">
-        <h3>💡 為什麼是 Sub-agent 架構？</h3>
-        <div class="grid-2">
-            <div>
-                <strong>傳統自動化：</strong><br>
-                • 單一腳本執行固定流程<br>
-                • 無法並行處理<br>
-                • 卡在一個環節就全停
-            </div>
-            <div>
-                <strong>Sub-agent 編排：</strong><br>
-                • 4 個 AI 分工合作<br>
-                • 並行處理、互不影響<br>
-                • 像真人團隊一樣運作
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 第 5 頁：成品展示 -->
-<div class="slide slide-dark">
-    <h2>成品展示</h2>
-    
-    <div class="grid-2">
-        <!-- 左側：AI 探索報告 -->
-        <div>
-            <h3 style="color: white;">🔍 探索者報告（每日自動）</h3>
-            <div class="mockup">
-                <div class="mockup-header">探索者 Sub-agent 回報</div>
-                <div class="mockup-content">
-                    <strong>【2026-02-25 探索報告】</strong><br><br>
-                    
-                    今天我發現 <span class="highlight-blue">3 個新平台</span>：<br><br>
-                    
-                    1️⃣ <strong>Facebook 社團「竹山買賣」</strong><br>
-                    • 成員：273 人<br>
-                    • 活躍度：高（每日 5-8 篇貼文）<br>
-                    • 評估：值得監控 ✓<br>
-                    • 狀態：已加入<br><br>
-                    
-                    2️⃣ <strong>PTT home-sale 板</strong><br>
-                    • 每日貼文：2-3 篇<br>
-                    • 竹山相關：偶爾出現<br>
-                    • 評估：低優先級<br><br>
-                    
-                    3️⃣ <strong>591 竹山區</strong><br>
-                    • 每日新物件：5-10 個<br>
-                    • 評估：持續監控 ✓<br>
-                    • 狀態：已設定<br><br>
-                    
-                    <span class="badge badge-success">預估每日潛在客戶：15 人</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 右側：AI 對話範例 -->
-        <div>
-            <h3 style="color: white;">💬 溝通者對話（自動互動）</h3>
-            <div class="mockup">
-                <div class="mockup-header">溝通者 Sub-agent 回報</div>
-                <div class="mockup-content">
-                    <strong>【今日對話摘要】</strong><br><br>
-                    
-                    已自動回覆 <span class="highlight-green">8 位客戶</span><br>
-                    篩選出 <span class="highlight">3 位高意願名單</span>：<br><br>
-                    
-                    <div style="background: #d5f4e6; padding: 15px; border-radius: 8px; margin: 10px 0;">
-                        <strong>1️⃣ 張小姐（急售透天）</strong><br>
-                        • 物件：竹山鎮延平路 3F 透天<br>
-                        • 預算：800 萬<br>
-                        • AI 評分：<span class="badge badge-success">92 分</span><br>
-                        • 狀態：<span class="badge badge-info">已約看屋</span><br>
-                        • 追蹤：明天下午 2 點<br>
-                        • 備註：急需資金，可議價
-                    </div>
-                    
-                    <div style="background: #fef5e7; padding: 15px; border-radius: 8px; margin: 10px 0;">
-                        <strong>2️⃣ 李先生（考慮賣公寓）</strong><br>
-                        • 物件：竹山鎮集山路 2 房<br>
-                        • 預算：未定<br>
-                        • AI 評分：<span class="badge badge-warning">68 分</span><br>
-                        • 狀態：<span class="badge badge-warning">3 天後再聯繫</span><br>
-                        • 備註：等貸款結清
-                    </div>
-                    
-                    <div style="background: #e8f4f8; padding: 15px; border-radius: 8px; margin: 10px 0;">
-                        <strong>3️⃣ 王太太（土地出售）</strong><br>
-                        • 物件：竹山鎮農地 500 坪<br>
-                        • AI 評分：<span class="badge badge-info">75 分</span><br>
-                        • 狀態：<span class="badge badge-success">待評估</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div style="margin-top: 30px; background: rgba(255,255,255,0.1); padding: 25px; border-radius: 12px;">
-        <h3 style="color: white; text-align: center;">📊 整理者 CRM 系統</h3>
-        <table style="font-size: 0.9em; margin-top: 20px;">
-            <tr>
-                <th>客戶</th>
-                <th>物件</th>
-                <th>評分</th>
-                <th>狀態</th>
-                <th>下次追蹤</th>
-            </tr>
-            <tr>
-                <td>張小姐</td>
-                <td>延平路透天</td>
-                <td><span class="badge badge-success">92</span></td>
-                <td>已約看屋</td>
-                <td>明天 14:00</td>
-            </tr>
-            <tr>
-                <td>李先生</td>
-                <td>集山路公寓</td>
-                <td><span class="badge badge-warning">68</span></td>
-                <td>3 天後聯繫</td>
-                <td>2/28</td>
-            </tr>
-            <tr>
-                <td>王太太</td>
-                <td>農地 500 坪</td>
-                <td><span class="badge badge-info">75</span></td>
-                <td>待評估</td>
-                <td>本週內</td>
-            </tr>
-        </table>
-    </div>
-</div>
-
-<!-- 第 6 頁：實現方式詳解 -->
-<div class="slide">
-    <h2>實現方式詳解</h2>
-    
-    <h3>需求 1：自主探索 → 如何用 OpenClaw 實現</h3>
-    <div class="solution-box">
-        <strong style="font-size: 1.2em;">使用工具：</strong> web_search + agent-browser + sessions_spawn
-        
-        <div class="code-block" style="margin-top: 15px;">
-# 探索者 Sub-agent 工作流程
-
-1. Main Session 下指令：
-   sessions_spawn(task="去網路上找竹山賣屋客戶")
-
-2. Sub-agent 自己執行：
-   → web_search("竹山 賣屋 Facebook")
-   → 找到 5 個相關社團
-   → agent-browser 訪問每個社團頁面
-   → 評估：成員數、活躍度、相關性
-   → 決定加入 2 個高價值社團
-   → gog sheets 更新監控清單
-
-3. 回報 Main Session：
-   「今天新增 2 個平台，預估每日 10 個潛在客戶」
-        </div>
-        
-        <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
-            <strong>關鍵：</strong>不是寫死「去 Facebook 社團 A」，而是 AI 自己搜尋、自己判斷、自己決定
-        </div>
-    </div>
-
-    <h3 style="margin-top: 30px;">需求 2：智能判斷 → 如何用 OpenClaw 實現</h3>
-    <div class="solution-box">
-        <strong style="font-size: 1.2em;">使用工具：</strong> Claude Opus + subagents + memory
-        
-        <div class="code-block" style="margin-top: 15px;">
-# 監控者 Sub-agent 工作流程
-
-1. agent-browser 爬取社團貼文
-   → 每個貼文提取：標題、內容、聯絡方式、圖片
-
-2. 呼叫 Claude Opus 判斷：
-   Prompt: "這個賣屋貼文，請評估：
-   - 是急售還是觀望？
-   - 屋主自售還是代理？
-   - 成交意願強度？
-   - 綜合評分 0-100"
-
-3. Claude Opus 回答：
-   {
-     "type": "急售",
-     "owner": true,
-     "willingness": 90,
-     "score": 85,
-     "reason": "標題含『急售』、聯絡方式是手機、價格合理"
-   }
-
-4. 篩選：只保留評分 > 70 的客戶
-        </div>
-        
-        <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
-            <strong>關鍵：</strong>用 LLM 深度理解語意，而非簡單的關鍵字比對
-        </div>
-    </div>
-</div>
-
-<!-- 第 7 頁：成本分析 -->
+<!-- 第 5 頁：方案與定價 -->
 <div class="slide slide-accent">
-    <h2>成本分析（完全透明）</h2>
-    
-    <h3>A. 開發成本（一次性，付給我們）</h3>
-    
-    <table>
-        <tr>
-            <th>項目</th>
-            <th>工時</th>
-            <th>費用</th>
-            <th>說明</th>
-        </tr>
-        <tr>
-            <td>需求訪談 & 設計</td>
-            <td>3 天</td>
-            <td>18,000</td>
-            <td>確認監控區域、目標客戶、對話策略</td>
-        </tr>
-        <tr>
-            <td>探索者 Sub-agent</td>
-            <td>5 天</td>
-            <td>30,000</td>
-            <td>web_search + agent-browser 整合</td>
-        </tr>
-        <tr>
-            <td>監控者 Sub-agent</td>
-            <td>5 天</td>
-            <td>30,000</td>
-            <td>爬取邏輯 + Claude Opus 判斷</td>
-        </tr>
-        <tr>
-            <td>溝通者 Sub-agent</td>
-            <td>7 天</td>
-            <td>42,000</td>
-            <td>自動對話 + 訊息生成（最複雜）</td>
-        </tr>
-        <tr>
-            <td>整理者 Sub-agent</td>
-            <td>3 天</td>
-            <td>18,000</td>
-            <td>gog sheets CRM + Cron 提醒</td>
-        </tr>
-        <tr>
-            <td>整合測試 & 優化</td>
-            <td>5 天</td>
-            <td>30,000</td>
-            <td>端對端測試、調校</td>
-        </tr>
-        <tr>
-            <td>上線培訓</td>
-            <td>2 天</td>
-            <td>12,000</td>
-            <td>操作教學、文件交付</td>
-        </tr>
-        <tr style="background: #d5f4e6; font-weight: 700;">
-            <td><strong>總計（進階版）</strong></td>
-            <td><strong>30 天</strong></td>
-            <td><span class="price-tag">180,000</span></td>
-            <td>4-5 週交付</td>
-        </tr>
-    </table>
-
-    <h3 style="margin-top: 40px;">B. 月運行成本（客戶自付 API）</h3>
-    
-    <div class="grid-2">
-        <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e91e63;">
-            <h3 style="color: #ad1457;">LLM API 費用</h3>
-            <table style="font-size: 0.95em;">
-                <tr>
-                    <th>項目</th>
-                    <th>月費 (NT$)</th>
-                </tr>
-                <tr>
-                    <td>Claude Opus（判斷 + 對話）</td>
-                    <td>2,000-3,000</td>
-                </tr>
-                <tr>
-                    <td>備選：Claude Sonnet</td>
-                    <td>1,500-2,000</td>
-                </tr>
-                <tr>
-                    <td>備選：GPT-4 Turbo</td>
-                    <td>3,000-5,000</td>
-                </tr>
-            </table>
-            
-            <div style="margin-top: 15px; padding: 15px; background: #f8bbd0; border-radius: 8px; color: #2c3e50;">
-                <strong>推薦：Claude Opus</strong><br>
-                平衡成本與能力，適合複雜判斷
-            </div>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e91e63;">
-            <h3 style="color: #ad1457;">其他 API 費用</h3>
-            <table style="font-size: 0.95em;">
-                <tr>
-                    <th>項目</th>
-                    <th>月費 (NT$)</th>
-                </tr>
-                <tr>
-                    <td>Facebook Graph API</td>
-                    <td>0（免費）</td>
-                </tr>
-                <tr>
-                    <td>Google Search API</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Google Sheets API</td>
-                    <td>0（免費）</td>
-                </tr>
-                <tr>
-                    <td>Telegram Bot</td>
-                    <td>0（免費）</td>
-                </tr>
-                <tr>
-                    <td>電費（24H 運行）</td>
-                    <td>100</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div style="margin-top: 30px; background: white; padding: 30px; border-radius: 12px; text-align: center; border: 3px solid #e91e63;">
-        <h3 style="color: #ad1457; font-size: 2em;">總月運行成本</h3>
-        <div class="big-number" style="color: #ad1457; font-size: 3.5em;">2,600-3,600</div>
-        <p style="font-size: 1.2em; color: #2c3e50;">客戶自付（LLM API + 其他 API）</p>
-        
-        <div style="margin-top: 20px; font-size: 1.1em; color: #34495e;">
-            💡 實際消耗視每日客戶數量而定<br>
-            估算：每月處理 300-500 個潛在客戶
-        </div>
-    </div>
-
-    <div style="margin-top: 30px; background: rgba(39, 174, 96, 0.15); padding: 25px; border-radius: 12px; border: 2px solid #27ae60;">
-        <h3 style="color: #ad1457; text-align: center;">✨ 驗收後免費 14 日技術支援</h3>
-        <div class="grid-2" style="margin-top: 20px; color: #2c3e50;">
-            <div>
-                <strong style="font-size: 1.1em; color: #27ae60;">包含：</strong><br>
-                • 技術性異常排除<br>
-                • 系統設定調整<br>
-                • 操作問題解答
-            </div>
-            <div>
-                <strong style="font-size: 1.1em; color: #e74c3c;">不包含：</strong><br>
-                • 功能新增或調整<br>
-                • 第三方服務變更導致的問題<br>
-                • 客戶自行修改導致的異常
-            </div>
-        </div>
-    </div>
-
-
-</div>
-
-<!-- 第 8 頁：合約與付款流程 -->
-<div class="slide slide-dark">
-    <h2>合約與付款流程</h2>
-    
-    <div style="background: rgba(255,255,255,0.1); padding: 40px; border-radius: 12px; margin-bottom: 40px;">
-        <h3 style="color: white; text-align: center; margin-bottom: 30px;">📋 付款方式</h3>
-        <div class="grid-2">
-            <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; text-align: center;">
-                <div style="font-size: 3em; margin-bottom: 15px;">1️⃣</div>
-                <h3 style="color: white; font-size: 1.5em; margin-bottom: 15px;">簽約訂金</h3>
-                <div class="big-number" style="color: #ffe66d; font-size: 3em;">70%</div>
-                <div style="font-size: 1.1em; margin-top: 15px;">
-                    簽約後 3 個工作日內支付<br>
-                    <span style="font-size: 0.9em; opacity: 0.8;">（專案排程與開發啟動費用）</span>
-                </div>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; text-align: center;">
-                <div style="font-size: 3em; margin-bottom: 15px;">2️⃣</div>
-                <h3 style="color: white; font-size: 1.5em; margin-bottom: 15px;">驗收尾款</h3>
-                <div class="big-number" style="color: #ffe66d; font-size: 3em;">30%</div>
-                <div style="font-size: 1.1em; margin-top: 15px;">
-                    驗收通過後支付<br>
-                    <span style="font-size: 0.9em; opacity: 0.8;">（完成驗收通知後 7 日內）</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; margin-bottom: 40px;">
-        <h3 style="color: white; margin-bottom: 25px;">🔄 完整流程（4 步驟）</h3>
-        <div class="grid-2" style="gap: 20px;">
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
-                <div style="font-size: 1.8em; margin-bottom: 10px;">📝 1. 簽署合約</div>
-                <div style="font-size: 1.05em;">
-                    • 雙方簽署開發服務合約<br>
-                    • 附件一：專案規格與驗收標準說明書<br>
-                    • 明確功能範圍與交付項目
-                </div>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
-                <div style="font-size: 1.8em; margin-bottom: 10px;">💰 2. 支付訂金</div>
-                <div style="font-size: 1.05em;">
-                    • 70% 訂金（3 個工作日內）<br>
-                    • 訂金支付後開始執行專案<br>
-                    • ⚠️ 訂金不予退還
-                </div>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
-                <div style="font-size: 1.8em; margin-bottom: 10px;">✅ 3. 驗收系統</div>
-                <div style="font-size: 1.05em;">
-                    • 依附件一逐項檢視功能<br>
-                    • 7 日內完成驗收<br>
-                    • 未提出視為驗收通過
-                </div>
-            </div>
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px;">
-                <div style="font-size: 1.8em; margin-bottom: 10px;">🎯 4. 正式交付</div>
-                <div style="font-size: 1.05em;">
-                    • 支付 30% 尾款<br>
-                    • 系統正式上線<br>
-                    • 啟動 14 日免費技術支援
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid-2">
-        <div style="background: rgba(231, 76, 60, 0.2); padding: 25px; border-radius: 12px; border: 2px solid #e74c3c;">
-            <h3 style="color: white;">⚠️ 重要說明</h3>
-            <ul style="color: white; font-size: 1.05em;">
-                <li>訂金屬「專案排程與開發啟動費用」</li>
-                <li>一經專案開始執行即不予退還</li>
-                <li>尾款未付清前暫停系統交付</li>
-                <li>需求變更需另行評估費用</li>
-            </ul>
-        </div>
-
-        <div style="background: rgba(39, 174, 96, 0.2); padding: 25px; border-radius: 12px; border: 2px solid #27ae60;">
-            <h3 style="color: white;">✨ 免費技術支援（14 日）</h3>
-            <div style="color: white; font-size: 1.05em;">
-                <strong>包含：</strong><br>
-                • 技術性異常排除<br>
-                • 系統設定調整<br>
-                • 操作問題解答<br><br>
-                <strong>不包含：</strong><br>
-                • 功能新增或調整<br>
-                • 第三方服務變更導致的問題<br>
-                • 客戶自行修改導致的異常
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- 第 9 頁：方案與定價 -->
-<div class="slide">
     <h2>方案與定價</h2>
-    
-    <div class="grid-3">
-        <div class="card">
-            <h3 style="color: #2b6cb0;">基礎版</h3>
-            <div class="big-number" style="font-size: 3em;">98K</div>
-            
-            <h4 style="margin-top: 20px;">包含內容：</h4>
-            <ul style="font-size: 0.95em;">
-                <li>單一地區（如竹山鎮）</li>
-                <li>2-3 個主要平台</li>
-                <li>探索者 + 監控者</li>
-                <li>基礎對話能力</li>
-                <li>Google Sheets CRM</li>
+    <p class="subtitle">一次建置，長期使用</p>
+
+    <div class="grid-2" style="margin-top: 20px;">
+        <div class="card" style="border: 2px solid #ddd;">
+            <h3 style="color: #2b6cb0;">標準版</h3>
+            <div class="big-number" style="font-size: 3.5em; color: #2b6cb0;">168,000</div>
+            <p style="color: #666; margin-bottom: 20px;">一次性建置費</p>
+
+            <ul style="font-size: 1em;">
+                <li>591 屋主自售自動監控（指定區域）</li>
+                <li>AI 智能評分（急迫度 0-100 分）</li>
+                <li>Google Sheets CRM 自動記錄</li>
+                <li>Telegram 即時推播高分物件</li>
+                <li>Telegram 追蹤提醒</li>
+                <li>14 天技術支援</li>
             </ul>
-            
-            <div style="margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px; font-size: 0.9em;">
-                <strong>適合：</strong>單一區域試水溫
+
+            <div style="margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
+                <strong>適合：</strong>先跑起來，感受 AI 帶來的效率提升
             </div>
         </div>
 
-        <div class="card" style="border: 4px solid #2b6cb0; transform: scale(1.05);">
-            <div class="badge badge-success" style="font-size: 1em; padding: 8px 15px;">⭐ 推薦</div>
-            <h3 style="color: #2b6cb0;">進階版</h3>
-            <div class="big-number" style="font-size: 3em;">198K</div>
-            
-            <h4 style="margin-top: 20px;">包含內容：</h4>
-            <ul style="font-size: 0.95em;">
-                <li>多地區（3-5 個）</li>
-                <li>自主平台探索</li>
-                <li>完整 4 個 Sub-agent</li>
-                <li>進階對話 + CRM</li>
-                <li>學習與優化</li>
+        <div class="card" style="border: 4px solid #e74c3c; position: relative; transform: scale(1.03);">
+            <div style="position: absolute; top: -14px; left: 20px; background: #e74c3c; color: white; padding: 4px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9em;">推薦方案</div>
+            <h3 style="color: #e74c3c;">專業版</h3>
+            <div class="big-number" style="font-size: 3.5em; color: #e74c3c;">268,000</div>
+            <p style="color: #666; margin-bottom: 20px;">一次性建置費</p>
+
+            <ul style="font-size: 1em;">
+                <li>標準版全部功能</li>
+                <li>Facebook 公開社團監控（唯讀模式，最多 10 個社團）</li>
+                <li>多區域監控（最多 5 個區域）</li>
+                <li>AI 話術建議產生器（電話/私訊/LINE）</li>
+                <li>每週 AI 市場分析報告</li>
+                <li>客製化篩選條件（價格/類型/坪數）</li>
                 <li>2 個月技術支援</li>
             </ul>
-            
-            <div style="margin-top: 20px; padding: 15px; background: #d5f4e6; border-radius: 8px; font-size: 0.9em;">
-                <strong>適合：</strong>認真投入，追求效果
-            </div>
-        </div>
 
-        </div>
-
-    <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white; border-radius: 12px;">
-        <h3 style="color: white; text-align: center;">💡 為什麼價格比傳統方案低？</h3>
-        <div class="grid-3" style="margin-top: 20px;">
-            <div style="text-align: center;">
-                <div style="font-size: 2em;">✅</div>
-                <strong>OpenClaw 框架已存在</strong><br>
-                <span style="font-size: 0.9em; opacity: 0.9;">不用從頭開發</span>
-            </div>
-            <div style="text-align: center;">
-                <div style="font-size: 2em;">✅</div>
-                <strong>所有 Skills 現成</strong><br>
-                <span style="font-size: 0.9em; opacity: 0.9;">直接組合使用</span>
-            </div>
-            <div style="text-align: center;">
-                <div style="font-size: 2em;">✅</div>
-                <strong>開發時程短</strong><br>
-                <span style="font-size: 0.9em; opacity: 0.9;">4-5 週交付</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 第 10 頁：開發時程 -->
-<div class="slide slide-dark">
-    <h2>開發時程（進階版）</h2>
-    
-    <div class="timeline">
-        <div class="timeline-item">
-            <h3 style="color: white;">第 1 週：需求訪談 & 設計</h3>
-            <div style="margin-left: 20px; font-size: 1.1em; color: white;">
-                <strong>我們做：</strong><br>
-                • 深入訪談業務需求<br>
-                • 設計 Sub-agent 工作流程<br>
-                • 定義對話策略與話術<br>
-                • 設計 CRM 欄位結構<br><br>
-                
-                <strong>客戶做：</strong><br>
-                • 提供目標區域與平台<br>
-                • 分享成功案例（學習話術）<br>
-                • 確認需求文件
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <h3 style="color: white;">第 2-3 週：Sub-agent 開發</h3>
-            <div style="margin-left: 20px; font-size: 1.1em; color: white;">
-                <strong>我們做：</strong><br>
-                • 開發 4 個 Sub-agent<br>
-                • 整合 OpenClaw Skills<br>
-                • 調校 Claude Opus 判斷邏輯<br>
-                • 設定 Cron 觸發器<br><br>
-                
-                <strong>客戶做：</strong><br>
-                • 準備 24H 電腦<br>
-                • 申請 Claude API Key<br>
-                • 建立 Facebook 帳號<br>
-                • 建立 Google Sheets
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <h3 style="color: white;">第 4 週：整合測試</h3>
-            <div style="margin-left: 20px; font-size: 1.1em; color: white;">
-                <strong>我們做：</strong><br>
-                • 端對端測試<br>
-                • 優化對話品質<br>
-                • 調整判斷門檻<br>
-                • 修復 Bug<br><br>
-                
-                <strong>客戶做：</strong><br>
-                • 測試系統運作<br>
-                • 提供回饋<br>
-                • 驗收功能
-            </div>
-        </div>
-
-        <div class="timeline-item">
-            <h3 style="color: white;">第 5 週：上線培訓</h3>
-            <div style="margin-left: 20px; font-size: 1.1em; color: white;">
-                <strong>我們做：</strong><br>
-                • 到府安裝部署<br>
-                • 操作教學（2 天）<br>
-                • 交付文件<br>
-                • 保固開始<br><br>
-                
-                <strong>客戶做：</strong><br>
-                • 參加培訓<br>
-                • 實際操作練習<br>
-                • 簽署驗收單
+            <div style="margin-top: 20px; padding: 15px; background: #fde8e8; border-radius: 8px;">
+                <strong>適合：</strong>全面佈局，比同行早一步掌握每個機會
             </div>
         </div>
     </div>
 
-    <div style="margin-top: 40px; background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px;">
-        <div class="grid-2">
+    <div style="margin-top: 30px; background: white; padding: 25px; border-radius: 12px; border: 2px solid #ad1457;">
+        <h3 style="color: #ad1457; text-align: center; font-size: 1.5em;">選配：月維護方案 NT$8,000/月</h3>
+        <div class="grid-2" style="margin-top: 15px; gap: 20px;">
             <div>
-                <h3 style="color: white;">標準時程</h3>
-                <div class="big-number" style="color: white; font-size: 3em;">4-5 週</div>
-                <p style="color: white; font-size: 1.1em;">
-                    vs 傳統 Autonomous Agent 開發：10-12 週
-                </p>
+                <strong style="color: #ad1457;">包含服務：</strong><br>
+                <span style="font-size: 1.05em;">
+                    系統監控 & 異常即時排除<br>
+                    爬蟲維護（平台改版時更新）<br>
+                    AI 模型持續優化（提高評分準確度）
+                </span>
             </div>
             <div>
-                <h3 style="color: white;">關鍵里程碑</h3>
-                <ul style="color: white; font-size: 1em;">
-                    <li>D+7：需求確認</li>
-                    <li>D+21：開發完成</li>
-                    <li>D+28：測試通過</li>
-                    <li>D+35：正式上線</li>
-                </ul>
+                <strong style="color: #ad1457;">額外福利：</strong><br>
+                <span style="font-size: 1.05em;">
+                    工作日即時技術支援<br>
+                    每月一次系統健檢報告<br>
+                    優先處理功能需求
+                </span>
             </div>
         </div>
     </div>
-</div>
 
-<!-- 第 11 頁：階段式交付 -->
-<div class="slide slide-green">
-    <h2>階段式交付（降低風險）</h2>
-    
-    <div style="background: rgba(22, 160, 133, 0.15); padding: 40px; border-radius: 16px; margin-bottom: 40px; text-align: center; border: 2px solid #16a085;">
-        <h3 style="color: #16a085; font-size: 2.5em; margin-bottom: 20px;">第一階段交付</h3>
-        <p style="font-size: 1.3em; color: #2c3e50;">
-            Week 1-2 完成核心功能 - 立即可用
+    <div style="margin-top: 20px; background: white; padding: 20px; border-radius: 12px;">
+        <h3 style="color: #ad1457; text-align: center; font-size: 1.3em;">月運行成本（API 費用，客戶自付）</h3>
+        <div class="grid-3" style="margin-top: 10px; text-align: center;">
+            <div>
+                <strong>Claude AI</strong><br>
+                <span style="font-size: 1.3em; color: #ad1457;">NT$2,000-3,000</span>
+            </div>
+            <div>
+                <strong>Google Search API</strong><br>
+                <span style="font-size: 1.3em; color: #ad1457;">NT$500</span>
+            </div>
+            <div>
+                <strong>Telegram + Sheets</strong><br>
+                <span style="font-size: 1.3em; color: #ad1457;">免費</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: white; padding: 20px 25px; border-radius: 12px; border-left: 5px solid #3498db; margin-top: 20px;">
+        <h3 style="color: #3498db; margin: 0 0 10px 0; font-size: 1.2em;">Facebook 社團監控說明</h3>
+        <p style="font-size: 1.05em; color: #2c3e50; line-height: 1.8; margin: 0;">
+            Facebook 社團採<strong>「唯讀安全模式」</strong>— 僅讀取公開社團貼文，不做自動留言或發訊息。
+            Meta 對自動留言/發訊管控極嚴，帳號存活期可能只有幾天，開發成本會白費。<br>
+            系統會將篩選出的高價值貼文推播到 Telegram，並附上 AI 建議話術，<strong>由你決定要不要聯繫</strong>。
         </p>
     </div>
+</div>
 
-    <h3>為什麼分階段？</h3>
-    
-    <div class="grid-3" style="margin-bottom: 40px;">
-        <div class="card" style="background: #e8f4f8;">
-            <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
-            <h4 style="color: #2b6cb0;">降低風險</h4>
-            <p style="font-size: 0.9em;">第 2 週就能看到成果<br>不用等到最後才驗收</p>
+<!-- 第 5.5 頁：報價明細 -->
+<div class="slide">
+    <h2>報價功能明細（專業版）</h2>
+    <p class="subtitle">NT$268,000 一次性建置費 — 包含以下所有功能模組</p>
+
+    <table style="font-size: 0.95em;">
+        <tr>
+            <th>功能模組</th>
+            <th>說明</th>
+            <th>包含</th>
+        </tr>
+        <tr>
+            <td><strong>591 自動監控模組</strong></td>
+            <td>指定區域屋主自售物件自動爬取，每 2 小時掃描一次，新物件即時偵測</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>Facebook 社團監控模組</strong></td>
+            <td>公開社團貼文唯讀監控（最多 10 個社團），自動擷取賣屋相關貼文</td>
+            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>AI 智能評分引擎</strong></td>
+            <td>Claude AI 深度語意分析，判斷急迫度、屋主類型、成交機率，0-100 分評分</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>AI 話術建議產生器</strong></td>
+            <td>針對每個物件自動生成電話/私訊/LINE 建議話術，學習你的說話風格</td>
+            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>Telegram 即時推播</strong></td>
+            <td>每日自動推播高分物件，追蹤到期自動提醒</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>Google Sheets CRM</strong></td>
+            <td>物件資料自動寫入、狀態追蹤、跟進日期管理，零手動輸入</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>多區域監控</strong></td>
+            <td>同時監控最多 5 個區域的 591 物件</td>
+            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>每週市場分析報告</strong></td>
+            <td>AI 自動彙整本週新物件趨勢、價格變化、熱門區域分析</td>
+            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>客製化篩選條件</strong></td>
+            <td>依價格、坪數、房屋類型、關鍵字等條件精準篩選</td>
+            <td style="text-align: center;"><span class="badge badge-danger">專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>系統部署與環境建置</strong></td>
+            <td>OpenClaw 環境安裝、API 串接、Telegram Bot 設定、Google Sheets 設定</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>教育訓練</strong></td>
+            <td>到府或遠端操作教學 1-2 小時，含操作文件交付</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+        <tr>
+            <td><strong>技術支援</strong></td>
+            <td>標準版 14 天 / 專業版 2 個月，工作日遠端協助</td>
+            <td style="text-align: center;"><span class="badge badge-success">標準版+專業版</span></td>
+        </tr>
+    </table>
+
+    <div class="grid-2" style="margin-top: 20px;">
+        <div style="background: #e8f4f8; padding: 20px; border-radius: 12px; text-align: center;">
+            <strong style="font-size: 1.2em; color: #2b6cb0;">標準版</strong><br>
+            <span style="font-size: 2em; font-weight: 700; color: #2b6cb0;">NT$168,000</span><br>
+            <span style="color: #666;">6 個核心模組</span>
         </div>
-        <div class="card" style="background: #d5f4e6;">
-            <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
-            <h4 style="color: #16a085;">快速回饋</h4>
-            <p style="font-size: 0.9em;">邊用邊調整<br>確保符合需求</p>
+        <div style="background: #fde8e8; padding: 20px; border-radius: 12px; text-align: center;">
+            <strong style="font-size: 1.2em; color: #e74c3c;">專業版（推薦）</strong><br>
+            <span style="font-size: 2em; font-weight: 700; color: #e74c3c;">NT$268,000</span><br>
+            <span style="color: #666;">全部 12 個模組</span>
         </div>
-        <div class="card" style="background: #fef5e7;">
-            <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
-            <h4 style="color: #e67e22;">建立信心</h4>
-            <p style="font-size: 0.9em;">實際運作說話<br>不是空口承諾</p>
+    </div>
+</div>
+
+<!-- 第 6 頁：投資報酬率 -->
+<div class="slide">
+    <h2>一年只要多成交 1 件，系統就回本</h2>
+
+    <div class="roi-highlight">
+        <h3 style="color: #2c3e50; font-size: 2em; margin: 0;">投資報酬率分析</h3>
+    </div>
+
+    <div class="grid-2" style="margin-top: 20px;">
+        <div>
+            <h3 style="color: #e74c3c;">你的投入</h3>
+            <table>
+                <tr>
+                    <th>項目</th>
+                    <th>金額</th>
+                </tr>
+                <tr>
+                    <td>系統建置（一次性）</td>
+                    <td><strong>NT$268,000</strong></td>
+                </tr>
+                <tr>
+                    <td>月維護費 x 12</td>
+                    <td>NT$96,000</td>
+                </tr>
+                <tr>
+                    <td>API 費用 x 12</td>
+                    <td>NT$36,000</td>
+                </tr>
+                <tr style="background: #fde8e8; font-weight: 700;">
+                    <td><strong>第一年總投入</strong></td>
+                    <td><strong style="color: #e74c3c;">NT$400,000</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <div>
+            <h3 style="color: #27ae60;">你的回報</h3>
+            <table>
+                <tr>
+                    <th>項目</th>
+                    <th>價值</th>
+                </tr>
+                <tr>
+                    <td>平均每件成交服務費</td>
+                    <td><strong>NT$200,000-500,000</strong></td>
+                </tr>
+                <tr>
+                    <td>每天省下的時間</td>
+                    <td><strong>2-3 小時</strong></td>
+                </tr>
+                <tr>
+                    <td>比同行早發現物件</td>
+                    <td><strong>平均 30-60 分鐘</strong></td>
+                </tr>
+                <tr style="background: #d5f4e6; font-weight: 700;">
+                    <td><strong>多成交 1-2 件即回本</strong></td>
+                    <td><strong style="color: #27ae60;">NT$400,000+</strong></td>
+                </tr>
+            </table>
         </div>
     </div>
 
-    <h3>階段交付內容</h3>
-    
+    <div class="cta-box" style="margin-top: 30px;">
+        <div style="font-size: 1.8em; font-weight: 700; margin-bottom: 15px;">
+            用一件成交的服務費<br>換一整年的 AI 助理
+        </div>
+        <div style="font-size: 1.2em; opacity: 0.9;">
+            每天省 2 小時 = 一年省 700+ 小時<br>
+            這些時間拿去帶看和談判，能多成交幾件？
+        </div>
+    </div>
+
+    <div class="grid-3" style="margin-top: 20px;">
+        <div class="card" style="text-align: center; background: #e8f4f8;">
+            <div style="font-size: 2.5em; font-weight: 700; color: #2b6cb0;">30 分鐘</div>
+            <strong>先發優勢</strong><br>
+            <span style="font-size: 0.95em; color: #666;">新物件一上架就通知你</span>
+        </div>
+        <div class="card" style="text-align: center; background: #d5f4e6;">
+            <div style="font-size: 2.5em; font-weight: 700; color: #27ae60;">0 漏接</div>
+            <strong>全物件覆蓋</strong><br>
+            <span style="font-size: 0.95em; color: #666;">AI 24 小時不休息</span>
+        </div>
+        <div class="card" style="text-align: center; background: #fef5e7;">
+            <div style="font-size: 2.5em; font-weight: 700; color: #e67e22;">80%+</div>
+            <strong>篩選準確率</strong><br>
+            <span style="font-size: 0.95em; color: #666;">只推高價值物件給你</span>
+        </div>
+    </div>
+</div>
+
+<!-- 第 7 頁：開發時程 & 階段交付 -->
+<div class="slide slide-dark">
+    <h2>開發時程與階段交付</h2>
+
+    <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
+        <h3 style="color: white; font-size: 2em; margin: 0;">3-4 週完成，分階段交付降低風險</h3>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.2em; margin-top: 10px;">第 2 週就能看到成果，不用等到最後才驗收</p>
+    </div>
+
     <div class="grid-2">
-        <div class="card" style="border: 3px solid #2b6cb0;">
-            <h3 style="color: #2b6cb0;">📦 第一階段（Week 1-2）</h3>
-            <h4 style="margin-top: 20px;">交付內容：</h4>
-            <ul>
-                <li>✅ Explorer Sub-agent（平台探索）</li>
-                <li>✅ Monitor Sub-agent（智能監控）</li>
-                <li>✅ 591 + PTT 完全自動化</li>
-                <li>✅ AI 判斷屋主 vs 仲介</li>
-                <li>✅ Telegram 推送</li>
-                <li>✅ 基礎 Google Sheets CRM</li>
+        <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.3);">
+            <h3 style="color: #ffe66d; margin-top: 0;">第一階段（Week 1-2）</h3>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1em; margin-bottom: 15px;">核心功能 - 交付後立即可用</p>
+            <ul style="color: white;">
+                <li>591 自動監控上線</li>
+                <li>AI 智能評分系統</li>
+                <li>Telegram 每日推播</li>
+                <li>Google Sheets CRM 自動記錄</li>
             </ul>
-            
-            <div style="margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
-                <strong>狀態：</strong>立即可用！<br>
-                已能產生實際價值
+            <div style="margin-top: 20px; padding: 15px; background: rgba(39, 174, 96, 0.3); border-radius: 8px; text-align: center;">
+                <strong style="color: #ffe66d; font-size: 1.2em;">Week 2 末驗收：系統已在運作</strong>
             </div>
         </div>
 
-        <div class="card" style="border: 3px solid #16a085;">
-            <h3 style="color: #16a085;">📦 第二階段（Week 3-5）</h3>
-            <h4 style="margin-top: 20px;">完善功能：</h4>
-            <ul>
-                <li>✅ Communicator Sub-agent（自動溝通）</li>
-                <li>✅ Organizer Sub-agent（CRM 管理）</li>
-                <li>✅ Facebook 半自動化</li>
-                <li>✅ 對話式設定</li>
-                <li>✅ 學習與優化</li>
-                <li>✅ 完整培訓與文件</li>
+        <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.3);">
+            <h3 style="color: #ffe66d; margin-top: 0;">第二階段（Week 3-4）</h3>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1em; margin-bottom: 15px;">進階功能 - 全面提升效率</p>
+            <ul style="color: white;">
+                <li>Facebook 公開社團 & 多區域監控</li>
+                <li>AI 話術建議產生器</li>
+                <li>客製化篩選條件</li>
+                <li>每週市場分析報告</li>
+                <li>完整培訓與文件交付</li>
             </ul>
-            
-            <div style="margin-top: 20px; padding: 15px; background: #d5f4e6; border-radius: 8px;">
-                <strong>狀態：</strong>完整功能<br>
-                長期自主運作
+            <div style="margin-top: 20px; padding: 15px; background: rgba(39, 174, 96, 0.3); border-radius: 8px; text-align: center;">
+                <strong style="color: #ffe66d; font-size: 1.2em;">Week 4 末最終驗收 + 正式上線</strong>
             </div>
         </div>
     </div>
 
-    <h3 style="margin-top: 40px;">付款與驗收流程</h3>
-    
-    <div class="flow-diagram">
-        <div class="flow-step">
-            <strong style="color: #2b6cb0;">Day 0：</strong> 簽約 + 付 70% 訂金
-        </div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step">
-            <strong style="color: #2b6cb0;">Week 1-2：</strong> 第一階段開發 + 交付
-        </div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step" style="background: #e8f4f8;">
-            <strong style="color: #2b6cb0;">Week 2 末：</strong> 第一階段驗收（系統已在運作）
-        </div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step">
-            <strong style="color: #2b6cb0;">Week 3-5：</strong> 第二階段開發
-        </div>
-        <div class="flow-arrow">↓</div>
-        <div class="flow-step" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white;">
-            <strong style="color: white;">Week 5 末：</strong> 最終驗收 + 付 30% 尾款
-        </div>
-    </div>
-
-    <div style="margin-top: 40px; background: rgba(22, 160, 133, 0.15); padding: 30px; border-radius: 12px; text-align: center; border: 2px solid #16a085;">
-        <h3 style="color: #16a085; font-size: 1.8em;">💡 第一階段驗收標準</h3>
-        <div class="grid-3" style="margin-top: 20px; text-align: left;">
-            <div style="color: #2c3e50;">
-                <strong style="font-size: 1.3em; color: #16a085;">✓ 自動監控</strong><br>
-                591+PTT 每 2 小時掃描
-            </div>
-            <div style="color: #2c3e50;">
-                <strong style="font-size: 1.3em; color: #16a085;">✓ AI 判斷</strong><br>
-                準確率 ≥ 80%
-            </div>
-            <div style="color: #2c3e50;">
-                <strong style="font-size: 1.3em; color: #16a085;">✓ 每日推送</strong><br>
-                Telegram 接收高分物件
+    <div style="margin-top: 30px;">
+        <h3 style="color: white;">付款流程</h3>
+        <div class="flow-diagram" style="background: rgba(255,255,255,0.05);">
+            <div class="grid-4" style="gap: 15px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 2em; margin-bottom: 8px;">1</div>
+                    <strong>簽約</strong><br>
+                    <span style="font-size: 0.95em;">付 50% 訂金</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 2em; margin-bottom: 8px;">2</div>
+                    <strong>第一階段交付</strong><br>
+                    <span style="font-size: 0.95em;">Week 2 驗收</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 2em; margin-bottom: 8px;">3</div>
+                    <strong>第二階段交付</strong><br>
+                    <span style="font-size: 0.95em;">Week 4 最終驗收</span>
+                </div>
+                <div style="background: rgba(39, 174, 96, 0.3); padding: 20px; border-radius: 8px; text-align: center; color: white;">
+                    <div style="font-size: 2em; margin-bottom: 8px;">4</div>
+                    <strong>付 50% 尾款</strong><br>
+                    <span style="font-size: 0.95em;">正式上線</span>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 第 12 頁：服務承諾 -->
+<!-- 第 8 頁：技術架構（精簡版） -->
+<div class="slide slide-green">
+    <h2>技術架構</h2>
+    <p class="subtitle">基於 OpenClaw 自主代理框架，穩定可靠</p>
+
+    <div class="flow-diagram">
+        <div class="flow-step" style="text-align: center;">
+            <h3 style="color: #2b6cb0; margin: 0;">OpenClaw 主控引擎</h3>
+            <p>每日自動排程執行，24 小時不間斷</p>
+        </div>
+
+        <div class="flow-arrow">&#8595;</div>
+
+        <div class="grid-3" style="gap: 20px;">
+            <div class="flow-step" style="border-left-color: #27ae60;">
+                <h3 style="color: #27ae60; margin: 0; font-size: 1.3em;">監控引擎</h3>
+                <p style="font-size: 0.95em; margin-top: 10px;">
+                    自動爬取 591 新物件<br>
+                    監控 Facebook 公開社團貼文<br>
+                    即時偵測新刊登
+                </p>
+            </div>
+
+            <div class="flow-step" style="border-left-color: #3498db;">
+                <h3 style="color: #3498db; margin: 0; font-size: 1.3em;">AI 分析引擎</h3>
+                <p style="font-size: 0.95em; margin-top: 10px;">
+                    Claude AI 深度語意分析<br>
+                    判斷急迫度 & 屋主類型<br>
+                    0-100 智能評分
+                </p>
+            </div>
+
+            <div class="flow-step" style="border-left-color: #e74c3c;">
+                <h3 style="color: #e74c3c; margin: 0; font-size: 1.3em;">通知 & CRM</h3>
+                <p style="font-size: 0.95em; margin-top: 10px;">
+                    Telegram 即時推播<br>
+                    Google Sheets 自動記錄<br>
+                    追蹤提醒排程
+                </p>
+            </div>
+        </div>
+
+        <div class="flow-arrow">&#8595;</div>
+
+        <div class="flow-step" style="background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white; text-align: center;">
+            <h3 style="color: white; margin: 0;">你的 Telegram</h3>
+            <p style="color: white;">每天收到篩選好的高價值物件 + AI 話術建議，直接開始聯繫</p>
+        </div>
+    </div>
+
+    <div class="grid-2" style="margin-top: 30px;">
+        <div style="background: rgba(22, 160, 133, 0.15); padding: 25px; border-radius: 12px; border: 2px solid #16a085;">
+            <h3 style="color: #16a085; margin-top: 0;">為什麼選 OpenClaw？</h3>
+            <ul style="font-size: 1em;">
+                <li>全球最熱門的開源 AI Agent 框架</li>
+                <li>GitHub 24.7 萬星，社群活躍</li>
+                <li>本地部署，資料不外洩</li>
+                <li>模組化設計，未來可擴充</li>
+            </ul>
+        </div>
+        <div style="background: rgba(22, 160, 133, 0.15); padding: 25px; border-radius: 12px; border: 2px solid #16a085;">
+            <h3 style="color: #16a085; margin-top: 0;">為什麼選 Claude AI？</h3>
+            <ul style="font-size: 1em;">
+                <li>最強中文理解能力</li>
+                <li>能準確判斷「急售」vs「觀望」語意</li>
+                <li>生成自然的對話話術</li>
+                <li>成本合理（月費約 NT$2,000-3,000）</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 第 9 頁：實績案例 -->
+<div class="slide slide-accent">
+    <h2>實績案例</h2>
+    <p class="subtitle">我們已有 AI 代理系統的實際導入經驗</p>
+
+    <div class="grid-2" style="margin-top: 20px;">
+        <div class="card" style="border: 3px solid #ad1457;">
+            <div class="badge badge-danger" style="font-size: 1em; padding: 8px 15px;">已上線運作</div>
+            <h3 style="color: #ad1457; margin-top: 15px;">Step1ne 獵頭顧問 AI 代理系統</h3>
+            <div style="margin-top: 15px;">
+                <table style="font-size: 0.95em;">
+                    <tr>
+                        <th>項目</th>
+                        <th>內容</th>
+                    </tr>
+                    <tr>
+                        <td><strong>客戶產業</strong></td>
+                        <td>人力資源 / 獵頭顧問</td>
+                    </tr>
+                    <tr>
+                        <td><strong>系統類型</strong></td>
+                        <td>AI 自動化招募代理系統</td>
+                    </tr>
+                    <tr>
+                        <td><strong>技術框架</strong></td>
+                        <td>OpenClaw Autonomous Agent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>專案規模</strong></td>
+                        <td>專業版（含完整系統建置）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>狀態</strong></td>
+                        <td><span class="badge badge-success">持續運作中</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: #ad1457;">導入成效</h3>
+            <div style="margin-top: 15px;">
+                <div style="background: #fce4ec; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <strong style="color: #ad1457;">AI 自動篩選候選人</strong><br>
+                    <span style="font-size: 1.05em;">從多個平台自動搜尋、評估候選人，大幅減少人工篩選時間</span>
+                </div>
+                <div style="background: #fce4ec; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <strong style="color: #ad1457;">智能匹配與評分</strong><br>
+                    <span style="font-size: 1.05em;">AI 根據職缺需求自動評分，顧問只需專注高價值候選人</span>
+                </div>
+                <div style="background: #fce4ec; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                    <strong style="color: #ad1457;">CRM 自動化管理</strong><br>
+                    <span style="font-size: 1.05em;">候選人資料、跟進狀態、提醒通知全自動，零手動輸入</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: white; padding: 25px; border-radius: 12px; margin-top: 30px; border: 2px solid #ad1457;">
+        <h3 style="color: #ad1457; text-align: center; margin-top: 0;">房仲系統 vs 獵頭系統：相同的核心架構</h3>
+        <div class="grid-3" style="margin-top: 15px; text-align: center;">
+            <div>
+                <strong style="color: #ad1457;">獵頭：找候選人</strong><br>
+                <span style="font-size: 2em;">&#8596;</span><br>
+                <strong style="color: #2b6cb0;">房仲：找屋主</strong>
+            </div>
+            <div>
+                <strong style="color: #ad1457;">獵頭：AI 評估適合度</strong><br>
+                <span style="font-size: 2em;">&#8596;</span><br>
+                <strong style="color: #2b6cb0;">房仲：AI 評估急迫度</strong>
+            </div>
+            <div>
+                <strong style="color: #ad1457;">獵頭：自動追蹤進度</strong><br>
+                <span style="font-size: 2em;">&#8596;</span><br>
+                <strong style="color: #2b6cb0;">房仲：自動追蹤物件</strong>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 15px; font-size: 1.1em; color: #2c3e50;">
+            <strong>同一套成熟的 AI 代理架構，針對房仲業務需求客製化調整</strong>
+        </p>
+    </div>
+</div>
+
+<!-- 第 9.5 頁：Step1ne 系統實際截圖 -->
+<div class="slide">
+    <h2>Step1ne 系統實際畫面</h2>
+    <p class="subtitle">已上線運作中 — 以下為系統真實截圖</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img src="pic/step1ne-overview.png" alt="Step1ne 總攬看板" style="width: 100%; display: block;">
+            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+                <strong>總攬看板</strong> — 全團隊顧問績效、Pipeline 進度一覽（1,778 位候選人）
+            </div>
+        </div>
+        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img src="pic/step1ne-ops-dashboard.png" alt="Step1ne 運營儀表板" style="width: 100%; display: block;">
+            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+                <strong>運營儀表板</strong> — 招募漏斗、每週匯入人數、轉換率追蹤
+            </div>
+        </div>
+        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img src="pic/step1ne-candidates.png" alt="Step1ne 候選人總表" style="width: 100%; display: block;">
+            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+                <strong>候選人總表</strong> — AI 自動評分、多平台來源（LinkedIn / GitHub / Email）
+            </div>
+        </div>
+        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img src="pic/step1ne-talent-map.png" alt="Step1ne 人才地圖" style="width: 100%; display: block;">
+            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+                <strong>人才地圖</strong> — Grade 分佈、公司來源 TOP 10、薪資與年資分析
+            </div>
+        </div>
+        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img src="pic/step1ne-sop.png" alt="Step1ne 顧問 SOP 手冊" style="width: 100%; display: block;">
+            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+                <strong>顧問 SOP 手冊</strong> — 獵頭 Playbook、Pipeline 階段、日常工作流程
+            </div>
+        </div>
+        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <img src="pic/step1ne-learning.png" alt="Step1ne 學習中心" style="width: 100%; display: block;">
+            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+                <strong>學習中心</strong> — 30 天培訓課程、產業知識庫、Prompt 工具箱
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #fce4ec; padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+        <strong style="color: #ad1457;">以上為 Step1ne 獵頭系統真實運作畫面，房仲系統將採用相同核心架構，針對不動產業務需求客製化開發。</strong>
+    </div>
+</div>
+
+<!-- 第 10 頁：服務承諾 -->
 <div class="slide">
     <h2>服務承諾</h2>
-    
-    <div class="grid-3">
-        <div class="card">
-            <h3 style="color: #2b6cb0;">基礎版</h3>
+
+    <div class="grid-2">
+        <div class="card" style="border: 2px solid #2b6cb0;">
+            <h3 style="color: #2b6cb0;">標準版服務</h3>
             <div class="big-number" style="font-size: 2.5em;">14 天</div>
             <h4>驗收後技術支援</h4>
             <ul style="font-size: 0.95em;">
-                <li>系統安裝與設定</li>
-                <li>基礎操作教學</li>
+                <li>系統安裝與環境設定</li>
+                <li>基礎操作教學（1 小時）</li>
                 <li>技術性問題排除</li>
                 <li>操作文件提供</li>
             </ul>
         </div>
 
-        <div class="card" style="border: 3px solid #2b6cb0;">
-            <h3 style="color: #2b6cb0;">進階版 ⭐</h3>
-            <div class="big-number" style="font-size: 2.5em;">2 個月</div>
-            <h4>技術支援</h4>
+        <div class="card" style="border: 3px solid #e74c3c;">
+            <div class="badge badge-danger" style="font-size: 1em; padding: 8px 15px;">推薦</div>
+            <h3 style="color: #e74c3c;">專業版服務</h3>
+            <div class="big-number" style="font-size: 2.5em; color: #e74c3c;">2 個月</div>
+            <h4>完整技術支援</h4>
             <ul style="font-size: 0.95em;">
-                <li>2 個月免費技術支援</li>
+                <li>完整操作培訓（2 小時）</li>
                 <li>Bug 修復（原功能範圍）</li>
-                <li>參數調整與優化</li>
+                <li>AI 評分參數調整與優化</li>
+                <li>話術模板持續優化</li>
                 <li>遠端協助（工作日 9:00-18:00）</li>
             </ul>
         </div>
+    </div>
 
+    <div style="margin-top: 30px;">
+        <div class="grid-2">
+            <div style="background: #d5f4e6; padding: 25px; border-radius: 12px; border: 2px solid #27ae60;">
+                <h3 style="color: #27ae60; margin-top: 0;">保固範圍</h3>
+                <ul style="font-size: 1em;">
+                    <li>系統功能異常修復</li>
+                    <li>AI 判斷準確度調校</li>
+                    <li>CRM & 通知功能維護</li>
+                    <li>操作問題即時解答</li>
+                </ul>
+            </div>
+            <div style="background: #fef5e7; padding: 25px; border-radius: 12px; border: 2px solid #f39c12;">
+                <h3 style="color: #e67e22; margin-top: 0;">不含在保固內</h3>
+                <ul style="font-size: 1em;">
+                    <li>第三方平台政策變更（591 改版等）</li>
+                    <li>功能新增或大幅調整</li>
+                    <li>客戶自行修改導致的異常</li>
+                    <li>API 費用（客戶自付）</li>
+                </ul>
+                <p style="font-size: 0.95em; color: #666; margin-top: 10px;">
+                    * 平台改版導致的問題，可透過月維護方案處理
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 第 10 頁：待確認事項 -->
+<div class="slide slide-dark">
+    <h2>開始之前，需要確認</h2>
+    <p class="subtitle">幾個簡單的問題，幫助我們快速啟動</p>
+
+    <div class="grid-2" style="margin-top: 20px;">
+        <div class="card">
+            <h3 style="color: white;">1. 監控範圍</h3>
+            <ul style="color: white;">
+                <li>591 監控哪些地區？（如：竹山、鹿谷...）</li>
+                <li>房屋類型？（透天、公寓、土地...）</li>
+                <li>價格區間篩選？</li>
+            </ul>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; font-size: 0.85em;">
+                建議：先鎖定 2-3 個核心區域，確認有效後再擴大
+            </div>
         </div>
 
-<!-- 第 13 頁：行動呼籲 -->
+        <div class="card">
+            <h3 style="color: white;">2. Facebook 社團清單</h3>
+            <ul style="color: white;">
+                <li>想監控哪些公開社團？（提供名稱或連結）</li>
+                <li>目前有加入哪些房屋買賣社團？</li>
+                <li>優先監控哪些地區的社團？</li>
+            </ul>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; font-size: 0.85em;">
+                建議：先列出 5-10 個最活躍的公開社團
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: white;">3. 話術風格</h3>
+            <ul style="color: white;">
+                <li>你平常怎麼開場？（AI 會學習你的風格）</li>
+                <li>要帶公司名稱嗎？</li>
+                <li>有沒有過去成功的開發話術可以參考？</li>
+            </ul>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; font-size: 0.85em;">
+                建議：提供 3-5 個成功案例，AI 會模仿你的說話方式
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="color: white;">4. 環境準備</h3>
+            <ul style="color: white;">
+                <li>準備一台 24 小時運行的電腦</li>
+                <li>申請 Claude API Key</li>
+                <li>建立 Telegram Bot</li>
+                <li>建立 Google Sheets</li>
+            </ul>
+            <div style="margin-top: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; font-size: 0.85em;">
+                以上我們會協助你完成設定
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px; background: rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; text-align: center;">
+        <h3 style="color: #ffe66d; margin: 0;">付款方式</h3>
+        <div style="font-size: 1.3em; margin-top: 15px; color: white;">
+            簽約 50% + 上線驗收 50%
+        </div>
+        <div style="font-size: 1em; margin-top: 10px; color: rgba(255,255,255,0.7);">
+            建置時程：約 3-4 週
+        </div>
+    </div>
+</div>
+
+<!-- 第 11 頁：行動呼籲 -->
 <div class="slide slide-cover">
     <div class="cta-box" style="max-width: 900px; margin: 0 auto;">
-        <h2 style="color: white; border: none; margin-bottom: 30px;">立即啟動</h2>
-        
+        <h2 style="color: white; border: none; margin-bottom: 30px;">讓 AI 幫你找客戶</h2>
+
         <div style="background: rgba(255,255,255,0.2); padding: 40px; border-radius: 12px; margin: 30px 0;">
-            <h3 style="color: white; font-size: 2em; margin-bottom: 20px;">推薦方案：進階版</h3>
-            <div class="big-number" style="color: #ffe66d; font-size: 4em;">198,000</div>
+            <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">推薦：專業版方案</h3>
+            <div class="big-number" style="color: #ffe66d; font-size: 4em;">268,000</div>
             <p style="font-size: 1.3em; color: white;">
-                一次性開發費用<br>
-                + 月運行成本 2,600-3,600（客戶自付）
+                一次性建置費<br>
+                + 月運行成本 NT$2,500-3,500
             </p>
-            
+
             <div style="margin-top: 30px; text-align: left; font-size: 1.1em;">
-                ✓ 完整 4 個 Sub-agent<br>
-                ✓ 自主探索 + AI 判斷 + 自動對話 + 成交閉環<br>
-                ✓ 2 個月技術支援<br>
-                ✓ 4-5 週交付<br>
-                ✓ 2 週免費 POC
+                591 + Facebook 公開社團 24 小時自動監控<br>
+                AI 智能評分，只推高價值物件<br>
+                話術建議產生器，聯繫更有效率<br>
+                Google Sheets CRM + Telegram 追蹤提醒<br>
+                2 個月技術支援<br>
+                3-4 週交付，第 2 週就能開始用
             </div>
         </div>
 
@@ -1515,30 +1413,28 @@
         <div class="grid-3" style="text-align: center;">
             <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 8px;">
                 <div style="font-size: 3em; margin-bottom: 10px;">1</div>
-                <strong>2 週免費 POC</strong><br>
-                <span style="font-size: 0.9em; opacity: 0.8;">證明可行性</span>
+                <strong>確認需求</strong><br>
+                <span style="font-size: 0.9em; opacity: 0.8;">今天討論監控範圍與細節</span>
             </div>
             <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 8px;">
                 <div style="font-size: 3em; margin-bottom: 10px;">2</div>
-                <strong>滿意後簽約</strong><br>
-                <span style="font-size: 0.9em; opacity: 0.8;">正式開發 4-5 週</span>
+                <strong>簽約啟動</strong><br>
+                <span style="font-size: 0.9em; opacity: 0.8;">付 50% 訂金，開始開發</span>
             </div>
             <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 8px;">
                 <div style="font-size: 3em; margin-bottom: 10px;">3</div>
-                <strong>系統上線</strong><br>
-                <span style="font-size: 0.9em; opacity: 0.8;">開始找客戶</span>
+                <strong>2 週後開始收到推播</strong><br>
+                <span style="font-size: 0.9em; opacity: 0.8;">AI 助理正式上工</span>
             </div>
         </div>
     </div>
 
     <div class="footer" style="margin-top: 80px; color: rgba(255,255,255,0.8);">
-        <p style="font-size: 1.2em;">📞 聯絡我們</p>
-        <p>隨時準備回答任何問題</p>
+        <p style="font-size: 1.2em;">準備好讓 AI 成為你的第一個助理了嗎？</p>
     </div>
 </div>
 
 <script>
-// 簡報導航
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 
@@ -1565,168 +1461,6 @@ document.addEventListener('click', (e) => {
     }
 });
 </script>
-
-
-  <!-- 報價方案 -->
-  <div class="slide slide-accent">
-    <h2>💰 報價方案</h2>
-    <p class="subtitle">一次性建置，永久擁有</p>
-    <div class="grid-2" style="margin-top:30px;">
-      <div class="card" style="border:3px solid #e74c3c; position:relative;">
-        <div style="position:absolute;top:-14px;left:20px;background:#e74c3c;color:white;padding:4px 16px;border-radius:20px;font-weight:700;font-size:0.9em;">✦ 推薦方案</div>
-        <h3 style="color:#ad1457;">核心方案（推薦）</h3>
-        <div class="big-number" style="color:#e74c3c;">NT 20萬</div>
-        <p style="color:#666;font-size:0.9em;margin-bottom:16px;">一次性建置費</p>
-        <ul>
-          <li>✅ 591 屋主自售每日自動監控</li>
-          <li>✅ Facebook 智能社團探索（AI 搜尋 + 人工確認）<br><small style="color:#e74c3c;">⚠️ 備註：Facebook 平台限制，採半自動模式，需人工確認後加入監控</small></li>
-          <li>✅ AI 意圖判斷評分（0-100分）</li>
-          <li>✅ AI 輔助留言範本（人工發送）<br><small style="color:#e74c3c;">⚠️ 備註：全自動留言有帳號封禁風險，預設為 AI 生成草稿 + 人工一鍵確認；如需全自動，帳號風險由客戶自行承擔</small></li>
-          <li>✅ Telegram 即時推播通知</li>
-          <li>✅ Google Sheets CRM 自動記錄</li>
-          <li>✅ 客製化篩選條件（地區/價格/類型）</li>
-          <li>✅ 教育訓練 1 次</li>
-          <li>✅ 售後技術支援 3 個月</li>
-        </ul>
-      </div>
-      <div class="card" style="border:2px solid #ddd;">
-        <h3 style="color:#555;">未來擴充選項</h3>
-        <div class="big-number" style="color:#888;">另議</div>
-        <p style="color:#666;font-size:0.9em;margin-bottom:16px;">核心方案上線穩定後可討論</p>
-        <ul>
-          <li style="color:#718096;">➕ PTT/Mobile01 房版監控</li>
-          <li style="color:#718096;">➕ 其他售屋平台整合</li>
-          <li style="color:#718096;">➕ 自動發送簡訊/Email</li>
-          <li style="color:#718096;">➕ 進階數據分析報表</li>
-          <li style="color:#e74c3c;">⚠️ Facebook 自動化功能（帳號風險高，不建議）</li>
-        </ul>
-      </div>
-    </div>
-    <div style="background:#fff8e1;border-left:4px solid #f39c12;border-radius:0 8px 8px 0;padding:16px 20px;margin-top:20px;">
-      📌 <strong>建置時程：約 2 週</strong>｜付款方式：簽約 50% + 上線 50%
-    </div>
-  </div>
-
-  <!-- 建置時程 -->
-  <div class="slide slide-green">
-    <h2>📅 建置時程規劃</h2>
-    <p class="subtitle">約 2 週完成上線</p>
-    <div class="timeline" style="margin-top:30px;">
-      <div class="timeline-item">
-        <h3>第 1 週｜需求確認 &amp; 環境建置</h3>
-        <ul>
-          <li>✓ 確認監控社團清單、地區、篩選條件</li>
-          <li>✓ 建置 OpenClaw AI 代理環境</li>
-          <li>✓ 串接 Telegram Bot &amp; Google Sheets</li>
-        </ul>
-      </div>
-      <div class="timeline-item">
-        <h3>第 2 週｜爬蟲 &amp; AI 開發</h3>
-        <ul>
-          <li>✓ 591 自動監控模組開發</li>
-          <li>✓ Facebook 社團監控模組開發</li>
-          <li>✓ AI 意圖判斷模型調校</li>
-        </ul>
-      </div>
-      <div class="timeline-item">
-        <h3>第 2 週後段｜整合測試 &amp; 上線</h3>
-        <ul>
-          <li>✓ 完整流程測試</li>
-          <li>✓ 客戶驗收確認</li>
-          <li>✓ 調整優化</li>
-        </ul>
-      </div>
-      <div class="timeline-item">
-        <h3>第 2 週末｜教育訓練 &amp; 交付</h3>
-        <ul>
-          <li>✓ 正式上線</li>
-          <li>✓ 教育訓練（1-2 小時）</li>
-          <li>✓ 售後支援開始計算</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- 待討論事項 -->
-  <div class="slide slide-dark">
-    <h2>🗣️ 今天需要確認的事項</h2>
-    <p class="subtitle">請雙方一起討論決定</p>
-    <div class="grid-2" style="margin-top:30px;">
-
-      <div class="card">
-        <h3>1️⃣ Facebook 帳號</h3>
-        <ul>
-          <li>使用主帳號 or 專用帳號？</li>
-          <li>帳號由誰管理？</li>
-          <li>帳號被限制時的備案？</li>
-        </ul>
-        <div style="margin-top:12px; background:rgba(255,255,255,0.1); border-radius:8px; padding:10px; font-size:0.85em;">
-          💡 建議：準備 1 個專用帳號，主帳號不做自動化
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>2️⃣ Facebook 留言方式</h3>
-        <ul>
-          <li>安全版：AI 草稿 → 人工一鍵確認</li>
-          <li>全自動版：AI 直接發送（帳號風險自負）</li>
-        </ul>
-        <div style="margin-top:12px; background:rgba(255,255,255,0.1); border-radius:8px; padding:10px; font-size:0.85em;">
-          💡 建議：先用安全版，穩定後再升級全自動
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>3️⃣ 留言頻率與話術</h3>
-        <ul>
-          <li>一天最多幾則留言？</li>
-          <li>話術要幾個版本？</li>
-          <li>要帶公司名稱嗎？</li>
-        </ul>
-        <div style="margin-top:12px; background:rgba(255,255,255,0.1); border-radius:8px; padding:10px; font-size:0.85em;">
-          💡 建議：每天不超過 20 則，話術 3-5 個版本輪替
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>4️⃣ 監控範圍</h3>
-        <ul>
-          <li>591 監控哪些地區？</li>
-          <li>Facebook 優先監控哪些社團？</li>
-          <li>房屋類型篩選條件？</li>
-        </ul>
-        <div style="margin-top:12px; background:rgba(255,255,255,0.1); border-radius:8px; padding:10px; font-size:0.85em;">
-          💡 建議：先鎖定 2-3 個核心地區，確認有效後再擴大
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>5️⃣ 保固與風險</h3>
-        <ul>
-          <li>Facebook 改版導致功能異常？</li>
-          <li>591 網站結構變更？</li>
-          <li>保固期內修復 SLA？</li>
-        </ul>
-        <div style="margin-top:12px; background:rgba(255,255,255,0.1); border-radius:8px; padding:10px; font-size:0.85em;">
-          💡 建議：平台政策變更不在保固範圍，但提供優先修復
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>6️⃣ 付款方式確認</h3>
-        <ul>
-          <li>簽約時付 50%</li>
-          <li>系統上線驗收後付 50%</li>
-          <li>發票開立方式？</li>
-        </ul>
-        <div style="margin-top:12px; background:rgba(255,255,255,0.1); border-radius:8px; padding:10px; font-size:0.85em;">
-          💡 預計建置時程：約 2 週
-        </div>
-      </div>
-
-    </div>
-  </div>
 
 </body>
 </html>
