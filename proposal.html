@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 房仲智能助理 — 合作提案總結報告</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+    :root {
+      --primary: #1a56db;
+      --primary-light: #e8effd;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --dark: #111827;
+      --gray-700: #374151;
+      --gray-500: #6b7280;
+      --gray-300: #d1d5db;
+      --gray-100: #f3f4f6;
+      --white: #ffffff;
+      --success: #059669;
+      --success-light: #d1fae5;
+      --danger: #dc2626;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, sans-serif;
+      color: var(--dark);
+      background: var(--gray-100);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* Print styles */
+    @media print {
+      body { background: white; font-size: 12px; line-height: 1.6; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none !important; }
+      .container { max-width: 100%; padding: 0; }
+      section { box-shadow: none !important; margin-bottom: 20px !important; }
+      .cover { min-height: auto !important; padding: 60px 40px !important; }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Cover */
+    .cover {
+      background: linear-gradient(135deg, #1a56db 0%, #1e3a8a 100%);
+      color: white;
+      padding: 80px 60px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
+
+    .cover h1 {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 15px;
+    }
+
+    .cover .subtitle {
+      font-size: 20px;
+      font-weight: 300;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 40px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .cover-meta span { display: flex; align-items: center; gap: 8px; }
+
+    /* Sections */
+    section {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    section h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 24px 0 12px;
+    }
+
+    p { margin-bottom: 12px; color: var(--gray-700); }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    th {
+      background: var(--gray-100);
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--gray-100); }
+
+    /* Pricing cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 24px 0;
+    }
+
+    .pricing-card {
+      border: 2px solid var(--gray-300);
+      border-radius: 12px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .pricing-card.recommended {
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px rgba(26, 86, 219, 0.15);
+    }
+
+    .pricing-card.recommended::before {
+      content: '推薦';
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pricing-card h3 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .pricing-card .price {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--primary);
+      margin: 10px 0;
+    }
+
+    .pricing-card .price small {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-500);
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      margin: 20px 0;
+    }
+
+    .pricing-card ul li {
+      padding: 6px 0;
+      font-size: 14px;
+      color: var(--gray-700);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .pricing-card ul li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .pricing-card .timeline {
+      background: var(--gray-100);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 16px;
+    }
+
+    /* Feature highlight */
+    .feature-highlight {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+
+    .feature-highlight p { color: var(--dark); margin: 0; }
+
+    /* Info box */
+    .info-box {
+      background: var(--accent-light);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+
+    .info-box.green {
+      background: var(--success-light);
+      border-color: var(--success);
+    }
+
+    .info-box p { margin: 0; color: var(--dark); font-size: 14px; }
+
+    /* Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 24px 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+
+    .step-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .step-connector {
+      width: 2px;
+      flex: 1;
+      background: var(--gray-300);
+      min-height: 20px;
+    }
+
+    .step:last-child .step-connector { display: none; }
+
+    .step-content {
+      padding-bottom: 30px;
+    }
+
+    .step-content h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: var(--gray-500);
+      margin: 0;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tag-blue { background: var(--primary-light); color: var(--primary); }
+    .tag-green { background: var(--success-light); color: var(--success); }
+    .tag-yellow { background: var(--accent-light); color: #b45309; }
+
+    /* Footer */
+    .report-footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--gray-500);
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .cover { padding: 40px 24px; min-height: auto; }
+      .cover h1 { font-size: 26px; }
+      .cover .subtitle { font-size: 16px; }
+      .cover-meta { flex-direction: column; gap: 10px; }
+      section { padding: 24px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+      th, td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-badge">合作提案總結報告</div>
+    <h1>AI 房仲智能開發系統<br>合作方案確認書</h1>
+    <p class="subtitle">OpenClaw × Claude AI — 專為有巢氏房屋打造的 AI 業務助理</p>
+    <div class="cover-meta">
+      <span>📅 日期：2026 年 3 月 20 日</span>
+      <span>🏢 客戶：有巢氏房屋</span>
+      <span>📄 文件性質：會議結論 & 後續流程</span>
+    </div>
+  </div>
+
+  <!-- 1. 會議結論摘要 -->
+  <section>
+    <h2>📋 一、會議結論摘要</h2>
+    <p>感謝有巢氏房屋團隊的寶貴時間。以下為本次會議討論確認的合作內容總結：</p>
+
+    <div class="feature-highlight">
+      <p><strong>核心目標：</strong>打造一套 AI 智能助理系統，自動監控 591 屋主自售物件、AI 分析評分、自動推播高價值物件給業務，大幅縮短業務開發流程，讓業務專注在「成交」而非「找物件」。</p>
+    </div>
+
+    <h3>確認事項</h3>
+    <table>
+      <tr>
+        <th style="width:30%">項目</th>
+        <th>確認內容</th>
+      </tr>
+      <tr>
+        <td>技術框架</td>
+        <td>OpenClaw（AI Agent 框架）+ Claude AI（Anthropic）</td>
+      </tr>
+      <tr>
+        <td>591 監控</td>
+        <td>定時自動爬取指定區域屋主自售物件</td>
+      </tr>
+      <tr>
+        <td>Facebook 社團</td>
+        <td>① AI 自動產文發佈到龍蝦社團 ② 業務手動轉貼貼文 → AI 即時分析評分</td>
+      </tr>
+      <tr>
+        <td>LINE 官方帳號</td>
+        <td>「龍蝦」AI 對話機器人：客服接待 + 需求情蒐 + 轉接真人業務</td>
+      </tr>
+      <tr>
+        <td>通知管道</td>
+        <td>Telegram Bot 即時推播 + 追蹤提醒</td>
+      </tr>
+      <tr>
+        <td>CRM 系統</td>
+        <td>Google Sheets 自動記錄（零手動輸入）</td>
+      </tr>
+      <tr>
+        <td>部署環境</td>
+        <td>客戶自有 Mac Mini（免伺服器費用）</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- 2. 方案與報價 -->
+  <section class="page-break">
+    <h2>💰 二、方案與報價</h2>
+
+    <div class="pricing-grid">
+      <!-- 標準版 -->
+      <div class="pricing-card">
+        <h3>標準版</h3>
+        <div class="price">NT$168,000 <small>一次性建置費</small></div>
+        <ul>
+          <li>591 屋主自售自動監控（單一區域）</li>
+          <li>AI 智能評分（急迫度 0-100 分）</li>
+          <li>Telegram 每日高分物件推播</li>
+          <li>Telegram 追蹤提醒（到期自動通知）</li>
+          <li>Google Sheets CRM 自動記錄</li>
+        </ul>
+        <div class="timeline">⏱ 交付週期：2 週 ｜ 技術支援：驗收後 14 天</div>
+      </div>
+
+      <!-- 專業版 -->
+      <div class="pricing-card recommended">
+        <h3>專業版</h3>
+        <div class="price">NT$268,000 <small>一次性建置費</small></div>
+        <ul>
+          <li>標準版全部功能</li>
+          <li>多區域監控（最多 5 個區域）</li>
+          <li>多平台 AI 分析（轉貼即評分）</li>
+          <li>AI 話術建議（電話 / 簡訊 / LINE）</li>
+          <li>每週物件彙整報告 + AI 趨勢分析</li>
+          <li>客製化篩選條件</li>
+          <li>LINE 官方帳號「龍蝦」AI 對話機器人</li>
+          <li>Facebook 龍蝦粉絲頁 AI 自動發文 + 社團 AI 產文草稿</li>
+        </ul>
+        <div class="timeline">⏱ 交付週期：4-5 週 ｜ 技術支援：驗收後 2 個月</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 功能明細對照 -->
+  <section>
+    <h2>📊 三、功能明細對照表</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:5%">#</th>
+          <th style="width:45%">功能模組</th>
+          <th style="width:25%; text-align:center">標準版</th>
+          <th style="width:25%; text-align:center">專業版</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>591 屋主自售自動監控</td>
+          <td style="text-align:center">✅ 單一區域</td>
+          <td style="text-align:center">✅ 最多 5 區域</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>AI 智能評分（Claude AI）</td>
+          <td style="text-align:center">✅</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Telegram 每日高分物件推播</td>
+          <td style="text-align:center">✅</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Telegram 追蹤到期提醒</td>
+          <td style="text-align:center">✅</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Google Sheets CRM 自動記錄</td>
+          <td style="text-align:center">✅</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>多平台 AI 分析（轉貼/截圖即評分）</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>客製化篩選條件</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>AI 話術建議產生器（電話/簡訊/LINE）</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>每週物件彙整報告 + AI 趨勢分析</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>LINE 官方帳號「龍蝦」AI 對話機器人</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Facebook 龍蝦粉絲頁自動發文 + 社團 AI 產文草稿</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>多區域監控（最多 5 區域）</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">✅</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 4. LINE 龍蝦 AI 說明 -->
+  <section class="page-break">
+    <h2>🦞 四、LINE「龍蝦」AI 對話機器人</h2>
+    <p>買方或賣方加入 LINE 官方帳號後，與「龍蝦」AI 進行自然對話。龍蝦會扮演親切的在地朋友角色，分三階段為業務創造價值：</p>
+
+    <table>
+      <tr>
+        <th style="width:15%">階段</th>
+        <th style="width:25%">功能</th>
+        <th>說明</th>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">Phase 1</span></td>
+        <td>親切打招呼</td>
+        <td>用輕鬆語氣歡迎新朋友，了解對方是要買房還是賣房</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-green">Phase 2</span></td>
+        <td>客服建立信任</td>
+        <td>專業回答房產問題（行情、稅費、流程），展現在地專業度</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-yellow">Phase 3</span></td>
+        <td>需求情蒐</td>
+        <td>自然引導對方透露：物件位置、期望價格、急迫度、賣屋原因</td>
+      </tr>
+    </table>
+
+    <div class="info-box green">
+      <p>✅ <strong>情報自動回傳：</strong>當龍蝦收集到足夠情報（位置 + 價格 + 急迫度），自動推播情報摘要到業務的 Telegram，並寫入 CRM。業務拿到情報後直接聯繫，成交率大幅提升。</p>
+    </div>
+  </section>
+
+  <!-- 5. FB 社團發文說明 -->
+  <section>
+    <h2>📱 五、Facebook AI 發文</h2>
+    <p>AI 自動產生高品質貼文內容，協助經營龍蝦粉絲頁與社團：</p>
+
+    <h3>發文管道</h3>
+    <table>
+      <tr>
+        <th>管道</th>
+        <th>方式</th>
+        <th>說明</th>
+      </tr>
+      <tr>
+        <td><strong>龍蝦粉絲頁</strong></td>
+        <td><span class="tag tag-green">全自動</span></td>
+        <td>使用 Facebook 官方 Graph API 自動發佈，100% 合規安全</td>
+      </tr>
+      <tr>
+        <td><strong>龍蝦社團</strong></td>
+        <td><span class="tag tag-blue">AI 產文 + 人工發佈</span></td>
+        <td>AI 產生貼文草稿 → 推播到 Telegram → 業務一鍵複製貼到社團</td>
+      </tr>
+    </table>
+
+    <div class="feature-highlight">
+      <p><strong>為什麼社團不全自動？</strong> Facebook 自 2018 年起限制第三方 App 在社團發文。為保護貴司帳號安全，社團發文採用「AI 產文 + 人工發佈」模式。AI 負責最耗時的內容創作，業務只需花 10 秒複製貼上。</p>
+    </div>
+
+    <h3>AI 產文類型</h3>
+    <table>
+      <tr>
+        <th>發文類型</th>
+        <th>佔比</th>
+        <th>說明</th>
+      </tr>
+      <tr>
+        <td>🏠 物件推薦</td>
+        <td>40%</td>
+        <td>推薦近期高價值物件，引導有興趣的人私訊</td>
+      </tr>
+      <tr>
+        <td>📊 市場觀察</td>
+        <td>30%</td>
+        <td>在地行情趨勢分析，展現專業度</td>
+      </tr>
+      <tr>
+        <td>💡 買賣小知識</td>
+        <td>20%</td>
+        <td>房產知識科普，建立社團價值</td>
+      </tr>
+      <tr>
+        <td>🤔 互動貼文</td>
+        <td>10%</td>
+        <td>投票/問答，提升社團互動率</td>
+      </tr>
+    </table>
+
+    <div class="info-box green">
+      <p>✅ <strong>品質控管：</strong>所有 AI 產生的貼文都會先推播到業務 Telegram 預覽。粉絲頁確認後自動發佈，社團複製貼上即可，全程業務掌握最終發佈權。</p>
+    </div>
+  </section>
+
+  <!-- 6. 客戶月營運費用 -->
+  <section>
+    <h2>📦 六、系統營運費用（客戶自行負擔）</h2>
+    <p>建置費為一次性費用。系統上線後，以下為每月的營運成本：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>項目</th>
+          <th style="text-align:center">標準版</th>
+          <th style="text-align:center">專業版</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Claude AI API 費用</td>
+          <td style="text-align:center">NT$2,000-3,000</td>
+          <td style="text-align:center">NT$1,500-4,750</td>
+        </tr>
+        <tr>
+          <td>伺服器</td>
+          <td style="text-align:center">免費（使用貴司 Mac Mini）</td>
+          <td style="text-align:center">免費（使用貴司 Mac Mini）</td>
+        </tr>
+        <tr>
+          <td>LINE 官方帳號</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">NT$0-800</td>
+        </tr>
+        <tr>
+          <td>Telegram / Google Sheets</td>
+          <td style="text-align:center">免費</td>
+          <td style="text-align:center">免費</td>
+        </tr>
+        <tr>
+          <td>Facebook Graph API</td>
+          <td style="text-align:center">—</td>
+          <td style="text-align:center">免費</td>
+        </tr>
+        <tr style="font-weight:700; background: var(--gray-100);">
+          <td>每月營運成本合計</td>
+          <td style="text-align:center">NT$2,000-3,500</td>
+          <td style="text-align:center">NT$1,500-5,550</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box green">
+      <p>💡 以專業版為例，相當於每天不到 NT$200 就有一個 24 小時不間斷的 AI 業務助理幫你找物件、分析、推播、產話術、經營社團。</p>
+    </div>
+  </section>
+
+  <!-- 7. 技術維護方案 -->
+  <section>
+    <h2>🔧 七、技術維護方案（選配）</h2>
+    <p>驗收後的免費技術支援期結束後，可選擇以下維護方案確保系統長期穩定運行：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>方案</th>
+          <th style="text-align:center">月費</th>
+          <th>包含服務</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>基本維護</strong></td>
+          <td style="text-align:center">NT$5,000/月</td>
+          <td>系統監控、異常自動通知、每月 2 次 bug 修復</td>
+        </tr>
+        <tr>
+          <td><strong>進階維護</strong></td>
+          <td style="text-align:center">NT$8,000/月</td>
+          <td>基本 + 591 改版應對 + AI Prompt 持續優化 + 小功能調整</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 8. 資安說明 -->
+  <section class="page-break">
+    <h2>🔒 八、資安與隱私說明</h2>
+
+    <table>
+      <tr>
+        <th style="width:30%">疑慮</th>
+        <th>我們的做法</th>
+      </tr>
+      <tr>
+        <td>591 爬蟲會不會被封鎖？</td>
+        <td>採用隨機間隔 + 模擬人類行為 + 備用 Proxy 機制。只讀取公開資訊，不登入帳號。</td>
+      </tr>
+      <tr>
+        <td>Facebook 帳號安全？</td>
+        <td>粉絲頁使用 Facebook 官方 Graph API 發文，100% 合規。社團則由 AI 產文、業務手動發佈，完全不使用自動化操作社團，零帳號風險。</td>
+      </tr>
+      <tr>
+        <td>LINE 對話隱私？</td>
+        <td>所有對話資料僅儲存在貴司 Mac Mini 本機，不上傳到第三方。Claude AI 分析後不保留對話內容。</td>
+      </tr>
+      <tr>
+        <td>客戶資料外洩風險？</td>
+        <td>CRM 資料存放在貴司自有的 Google Sheets，我方無法存取。系統部署在貴司設備，資料不經過我方伺服器。</td>
+      </tr>
+      <tr>
+        <td>API Key 安全？</td>
+        <td>所有 API Key 以環境變數儲存，不寫死在程式碼中。貴司可隨時自行更換。</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- 9. 確認後的流程 -->
+  <section>
+    <h2>🚀 九、確認後的下一步</h2>
+    <p>若貴司確認合作方案，以下是後續流程：</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">1</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>簽訂合作合約</h4>
+          <p>確認方案版本（標準/專業）、交付範圍、付款方式、時程。建議採 50% 簽約金 + 50% 驗收尾款。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">2</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>需求訪談 & 資料收集（1-2 天）</h4>
+          <p>確認監控區域、篩選條件、話術範例、龍蝦人設語氣偏好。貴司提供 Mac Mini 遠端存取權限。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">3</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>API 帳號申請（貴司操作）</h4>
+          <p>申請 Claude API Key、建立 Telegram Bot、建立 Google Sheets、申請 LINE Channel（專業版）、申請 Facebook App（專業版）。我方提供詳細圖文教學。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">4</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>系統開發（標準版 2 週 / 專業版 4-5 週）</h4>
+          <p>每週提供進度報告。開發期間可隨時透過 Telegram 溝通。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">5</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>部署 & 內部測試（2-3 天）</h4>
+          <p>系統部署到貴司 Mac Mini，進行實際監控測試，確認所有功能正常運作。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">6</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>驗收 & 教育訓練（半天）</h4>
+          <p>依驗收標準逐項確認功能。現場教學操作方式，交付操作手冊。支付尾款。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">7</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>免費技術支援期</h4>
+          <p>標準版 14 天 / 專業版 2 個月。期間如有問題免費處理。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-line">
+          <div class="step-number">8</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h4>正式上線 & 長期維護（選配）</h4>
+          <p>系統正式投入使用。可選擇簽訂維護合約，確保長期穩定。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. 付款方式 -->
+  <section>
+    <h2>💳 十、付款方式</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>階段</th>
+          <th>比例</th>
+          <th>時間點</th>
+          <th>說明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>簽約金</td>
+          <td><strong>50%</strong></td>
+          <td>簽約時</td>
+          <td>確認合作後支付，開始開發</td>
+        </tr>
+        <tr>
+          <td>驗收尾款</td>
+          <td><strong>50%</strong></td>
+          <td>驗收通過後</td>
+          <td>功能全數驗收通過後支付</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <p>📌 付款方式可配合貴司需求調整（如匯款、支票等），請於簽約時確認。</p>
+    </div>
+  </section>
+
+  <!-- 11. 聯繫方式 -->
+  <section>
+    <h2>📞 十一、聯繫方式</h2>
+    <p>如有任何疑問或需要進一步討論，歡迎隨時聯繫：</p>
+
+    <table>
+      <tr>
+        <td style="width:30%; font-weight:600">專案負責人</td>
+        <td>Jacky</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600">Email</td>
+        <td>（請填入）</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600">電話 / LINE</td>
+        <td>（請填入）</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600">回覆期限</td>
+        <td>本報價有效期限為 <strong>30 天</strong>（至 2026 年 4 月 19 日）</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    <p>本文件為合作提案總結報告，不具法律效力。正式合作以雙方簽訂之合約為準。</p>
+    <p style="margin-top:8px; font-size:12px; color:#9ca3af;">
+      Powered by OpenClaw × Claude AI ｜ 文件產生日期：2026-03-20
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
