@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 房仲智能助理 — 客製化需求問卷</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+
+    :root {
+      --primary: #1a56db;
+      --primary-light: #e8effd;
+      --accent: #f59e0b;
+      --accent-light: #fef3c7;
+      --dark: #111827;
+      --gray-700: #374151;
+      --gray-500: #6b7280;
+      --gray-300: #d1d5db;
+      --gray-100: #f3f4f6;
+      --white: #ffffff;
+      --success: #059669;
+      --success-light: #d1fae5;
+      --danger: #dc2626;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', -apple-system, sans-serif;
+      color: var(--dark);
+      background: var(--gray-100);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    @media print {
+      body { background: white; font-size: 12px; line-height: 1.6; }
+      .page-break { page-break-before: always; }
+      .no-print { display: none !important; }
+      .container { max-width: 100%; padding: 0; }
+      section { box-shadow: none !important; margin-bottom: 20px !important; }
+      .cover { min-height: auto !important; padding: 60px 40px !important; }
+      textarea, input[type="text"] { border: 1px solid #999 !important; }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Cover */
+    .cover {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      padding: 60px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .cover-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .cover h1 {
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .cover .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 30px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    /* Section cards */
+    section {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 40px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 12px;
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 28px 0 12px 0;
+      color: var(--dark);
+    }
+
+    h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 20px 0 8px 0;
+      color: var(--gray-700);
+    }
+
+    p { color: var(--gray-700); margin-bottom: 12px; }
+
+    /* Info boxes */
+    .info-box {
+      background: var(--accent-light);
+      border: 1px solid #fcd34d;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+
+    .info-box.blue {
+      background: var(--primary-light);
+      border-color: #93b4f5;
+    }
+
+    .info-box.green {
+      background: var(--success-light);
+      border-color: #6ee7b7;
+    }
+
+    .info-box p { margin-bottom: 0; }
+
+    /* Form elements */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--dark);
+    }
+
+    .form-group .hint {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      border: 2px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 15px;
+      color: var(--dark);
+      transition: border-color 0.2s;
+      background: var(--white);
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    textarea.large {
+      min-height: 140px;
+    }
+
+    /* Checkbox & Radio groups */
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 2px solid var(--gray-300);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .option-item:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .option-item input[type="checkbox"],
+    .option-item input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+
+    th {
+      background: var(--gray-100);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-500);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--gray-300);
+      vertical-align: top;
+    }
+
+    td input[type="text"],
+    td textarea {
+      border-width: 1px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    td textarea {
+      min-height: 50px;
+    }
+
+    /* Tags */
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .tag-blue { background: var(--primary-light); color: var(--primary); }
+    .tag-green { background: var(--success-light); color: var(--success); }
+    .tag-yellow { background: var(--accent-light); color: #92400e; }
+    .tag-red { background: #fee2e2; color: var(--danger); }
+
+    /* Section numbering */
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 2px dashed var(--gray-300);
+      margin: 20px 0;
+    }
+
+    /* Example block */
+    .example {
+      background: var(--gray-100);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--gray-500);
+      margin: 8px 0 16px 0;
+      border-left: 4px solid var(--gray-300);
+    }
+
+    .example strong {
+      color: var(--gray-700);
+    }
+
+    /* Footer */
+    .report-footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--gray-500);
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .cover { padding: 40px 24px; min-height: auto; }
+      .cover h1 { font-size: 24px; }
+      section { padding: 24px; }
+      .option-grid { grid-template-columns: 1fr; }
+      .cover-meta { flex-direction: column; gap: 8px; }
+      table { font-size: 13px; }
+      td, th { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-badge">📋 客製化需求問卷</div>
+    <h1>AI 房仲智能助理<br>系統設定需求調查</h1>
+    <p class="subtitle">請填寫以下問卷，讓我們精準打造最適合您的 AI 助理系統</p>
+    <div class="cover-meta">
+      <span>📅 日期：2026-03-20</span>
+      <span>🏢 客戶：有巢氏房屋</span>
+    </div>
+  </div>
+
+  <!-- 說明 -->
+  <section>
+    <h2>📌 填寫說明</h2>
+    <p>本問卷用於收集系統客製化所需的關鍵資訊。您的回覆將直接影響以下系統設定：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>問卷區塊</th>
+          <th>對應系統設定</th>
+          <th>影響範圍</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag tag-blue">Part 1</span> 監控區域</td>
+          <td>591 爬蟲掃描範圍</td>
+          <td>config.yaml → regions</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-blue">Part 2</span> 篩選條件</td>
+          <td>物件過濾門檻</td>
+          <td>config.yaml → filters</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-blue">Part 3</span> 評分標準</td>
+          <td>AI 評分權重與偏好</td>
+          <td>AI Prompt 設定</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-green">Part 4</span> 話術模板</td>
+          <td>AI 產生的電話 / 簡訊 / LINE 話術</td>
+          <td>AI Prompt + 範例庫</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-yellow">Part 5</span> 龍蝦人設</td>
+          <td>LINE 龍蝦 AI 對話風格 & 人格設定</td>
+          <td>soul.md + agent.md</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-yellow">Part 6</span> 貼文模板</td>
+          <td>FB 粉絲頁 / 社團發文風格</td>
+          <td>AI Prompt + 貼文範例庫</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box blue">
+      <p>💡 <strong>Part 1–3</strong> 為標準版 & 專業版皆需填寫。<strong>Part 4–6</strong> 僅專業版需填寫。不確定的項目可先留空，後續可再調整。</p>
+    </div>
+  </section>
+
+
+  <!-- ==================== PART 1: 監控區域 ==================== -->
+  <section>
+    <h2><span class="section-num">1</span> 監控區域設定</h2>
+    <p>請告訴我們您想監控的房屋區域，系統會自動在 591 上掃描這些區域的新物件。</p>
+
+    <h3>1-1. 主要營業區域</h3>
+
+    <div class="form-group">
+      <label>請勾選需要監控的縣市（可複選）</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 台北市</label>
+        <label class="option-item"><input type="checkbox"> 新北市</label>
+        <label class="option-item"><input type="checkbox"> 桃園市</label>
+        <label class="option-item"><input type="checkbox"> 新竹縣市</label>
+        <label class="option-item"><input type="checkbox"> 台中市</label>
+        <label class="option-item"><input type="checkbox"> 台南市</label>
+        <label class="option-item"><input type="checkbox"> 高雄市</label>
+        <label class="option-item"><input type="checkbox"> 彰化縣</label>
+        <label class="option-item"><input type="checkbox"> 南投縣</label>
+        <label class="option-item"><input type="checkbox"> 雲林縣</label>
+        <label class="option-item"><input type="checkbox"> 嘉義縣市</label>
+        <label class="option-item"><input type="checkbox"> 其他（請在下方說明）</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>精確到鄉鎮市區（選填，有填會更精準）</label>
+      <div class="hint">例如：南投縣竹山鎮、南投縣草屯鎮、雲林縣斗六市</div>
+      <textarea placeholder="請列出需要重點監控的鄉鎮市區..."></textarea>
+    </div>
+
+    <h3>1-2. 監控頻率偏好</h3>
+
+    <div class="form-group">
+      <label>希望系統多久掃描一次 591 新物件？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="scan-freq"> 每 2 小時</label>
+        <label class="option-item"><input type="radio" name="scan-freq"> 每 4 小時</label>
+        <label class="option-item"><input type="radio" name="scan-freq"> 每 6 小時</label>
+        <label class="option-item"><input type="radio" name="scan-freq"> 每天固定時段</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>偏好的推播時段（選填）</label>
+      <div class="hint">例如：早上 8 點和下午 5 點各推一次</div>
+      <input type="text" placeholder="例：08:00, 17:00">
+    </div>
+  </section>
+
+
+  <!-- ==================== PART 2: 篩選條件 ==================== -->
+  <section>
+    <h2><span class="section-num">2</span> 物件篩選條件</h2>
+    <p>系統爬到新物件後，會先依照以下條件篩選，符合的才會進入 AI 評分流程。</p>
+
+    <h3>2-1. 物件類型</h3>
+
+    <div class="form-group">
+      <label>想監控哪些物件類型？（可複選）</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 公寓</label>
+        <label class="option-item"><input type="checkbox"> 電梯大樓</label>
+        <label class="option-item"><input type="checkbox"> 透天厝</label>
+        <label class="option-item"><input type="checkbox"> 華廈</label>
+        <label class="option-item"><input type="checkbox"> 店面</label>
+        <label class="option-item"><input type="checkbox"> 土地</label>
+        <label class="option-item"><input type="checkbox"> 套房</label>
+        <label class="option-item"><input type="checkbox"> 全部都要</label>
+      </div>
+    </div>
+
+    <h3>2-2. 價格範圍</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>物件類型</th>
+          <th>最低價（萬）</th>
+          <th>最高價（萬）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>公寓 / 華廈</td>
+          <td><input type="text" placeholder="例：300"></td>
+          <td><input type="text" placeholder="例：1500"></td>
+        </tr>
+        <tr>
+          <td>電梯大樓</td>
+          <td><input type="text" placeholder="例：500"></td>
+          <td><input type="text" placeholder="例：3000"></td>
+        </tr>
+        <tr>
+          <td>透天厝</td>
+          <td><input type="text" placeholder="例：800"></td>
+          <td><input type="text" placeholder="例：5000"></td>
+        </tr>
+        <tr>
+          <td>土地</td>
+          <td><input type="text" placeholder="例：200"></td>
+          <td><input type="text" placeholder="例：8000"></td>
+        </tr>
+        <tr>
+          <td>店面</td>
+          <td><input type="text" placeholder="例：500"></td>
+          <td><input type="text" placeholder="例：5000"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>2-3. 坪數範圍</h3>
+
+    <div class="form-group">
+      <label>最低坪數</label>
+      <input type="text" placeholder="例：15 坪">
+    </div>
+    <div class="form-group">
+      <label>最高坪數（選填，不限則留空）</label>
+      <input type="text" placeholder="例：80 坪">
+    </div>
+
+    <h3>2-4. 屋齡限制</h3>
+
+    <div class="form-group">
+      <label>屋齡上限（選填）</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="age"> 不限</label>
+        <label class="option-item"><input type="radio" name="age"> 10 年以內</label>
+        <label class="option-item"><input type="radio" name="age"> 20 年以內</label>
+        <label class="option-item"><input type="radio" name="age"> 30 年以內</label>
+      </div>
+    </div>
+
+    <h3>2-5. 排除條件</h3>
+
+    <div class="form-group">
+      <label>有沒有想排除的物件？（可複選）</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 頂樓加蓋</label>
+        <label class="option-item"><input type="checkbox"> 地下室</label>
+        <label class="option-item"><input type="checkbox"> 工業用地</label>
+        <label class="option-item"><input type="checkbox"> 凶宅</label>
+        <label class="option-item"><input type="checkbox"> 海砂屋</label>
+        <label class="option-item"><input type="checkbox"> 輻射屋</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>其他排除條件（選填）</label>
+      <textarea placeholder="例如：排除 1 樓、排除面向高速公路的物件..."></textarea>
+    </div>
+  </section>
+
+
+  <!-- ==================== PART 3: AI 評分標準 ==================== -->
+  <section>
+    <h2><span class="section-num">3</span> AI 評分標準偏好</h2>
+    <p>AI 會為每個物件打 0–100 分。請告訴我們您重視的評分面向與權重。</p>
+
+    <h3>3-1. 評分面向權重</h3>
+    <p>請為以下面向分配重要性（1–5 分，5 為最重要）：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>評分面向</th>
+          <th>說明</th>
+          <th style="text-align:center; width:120px">重要性 (1-5)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>價格合理性</strong></td>
+          <td>與實價登錄 / 周邊行情比較，開價是否合理</td>
+          <td><input type="text" style="text-align:center" placeholder="1-5"></td>
+        </tr>
+        <tr>
+          <td><strong>地段優勢</strong></td>
+          <td>交通、學區、生活機能、未來發展性</td>
+          <td><input type="text" style="text-align:center" placeholder="1-5"></td>
+        </tr>
+        <tr>
+          <td><strong>屋況品質</strong></td>
+          <td>屋齡、裝潢狀態、格局合理性</td>
+          <td><input type="text" style="text-align:center" placeholder="1-5"></td>
+        </tr>
+        <tr>
+          <td><strong>投資潛力</strong></td>
+          <td>增值空間、租金收益率</td>
+          <td><input type="text" style="text-align:center" placeholder="1-5"></td>
+        </tr>
+        <tr>
+          <td><strong>急迫度</strong></td>
+          <td>屋主是否急售、價格是否低於行情</td>
+          <td><input type="text" style="text-align:center" placeholder="1-5"></td>
+        </tr>
+        <tr>
+          <td><strong>成交難度</strong></td>
+          <td>屋主是否好溝通、物件是否易帶看</td>
+          <td><input type="text" style="text-align:center" placeholder="1-5"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3-2. 推播門檻</h3>
+
+    <div class="form-group">
+      <label>幾分以上的物件才要推播到 Telegram？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="threshold"> 60 分以上</label>
+        <label class="option-item"><input type="radio" name="threshold"> 70 分以上</label>
+        <label class="option-item"><input type="radio" name="threshold"> 80 分以上</label>
+        <label class="option-item"><input type="radio" name="threshold"> 全部都推</label>
+      </div>
+    </div>
+
+    <h3>3-3. 額外評分偏好（選填）</h3>
+
+    <div class="form-group">
+      <label>有沒有特殊的判斷標準？</label>
+      <div class="hint">例如：近某建案的物件加分、有車位的加分、面公園的加分…</div>
+      <textarea placeholder="請描述您的特殊偏好或加分 / 扣分條件..."></textarea>
+    </div>
+  </section>
+
+
+  <!-- ==================== PART 4: 話術模板 ==================== -->
+  <section class="page-break">
+    <h2><span class="section-num">4</span> AI 話術模板偏好 <span class="tag tag-green">專業版</span></h2>
+    <p>AI 會根據物件特徵自動產生開發話術。請提供您的話術風格偏好。</p>
+
+    <h3>4-1. 話術語氣風格</h3>
+
+    <div class="form-group">
+      <label>您偏好的溝通語氣？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="tone"> 親切友善型</label>
+        <label class="option-item"><input type="radio" name="tone"> 專業權威型</label>
+        <label class="option-item"><input type="radio" name="tone"> 熱情積極型</label>
+        <label class="option-item"><input type="radio" name="tone"> 沉穩信賴型</label>
+      </div>
+    </div>
+
+    <h3>4-2. 話術範例</h3>
+    <p>如果您有習慣使用的話術，請提供範例讓 AI 學習您的風格：</p>
+
+    <div class="form-group">
+      <label>📞 電話開發話術範例</label>
+      <div class="example">
+        <strong>範例：</strong>「X先生/小姐您好，我是有巢氏房屋的OO，看到您在591上有刊登OO路的房子，想請問這個物件目前還有在賣嗎？方便跟您聊幾分鐘嗎？」
+      </div>
+      <textarea class="large" placeholder="請貼上您平時打電話開發的話術範例（1-3 個）..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>💬 簡訊 / LINE 開發話術範例</label>
+      <div class="example">
+        <strong>範例：</strong>「您好，我是有巢氏房屋OO店的OO。看到您在591刊登的物件，我們手邊有幾位買方在找這個區域的房子，不知道您方不方便讓我帶看呢？」
+      </div>
+      <textarea class="large" placeholder="請貼上您平時傳簡訊/LINE 的話術範例（1-3 個）..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>🚫 禁止使用的詞彙或說法（選填）</label>
+      <div class="hint">例如：不要說「便宜」、不要太過推銷、不要提到競爭對手名字</div>
+      <textarea placeholder="請列出 AI 產話術時不能使用的詞彙或需要避免的表達方式..."></textarea>
+    </div>
+
+    <h3>4-3. 公司資訊（用於話術中自我介紹）</h3>
+
+    <table>
+      <tbody>
+        <tr>
+          <td style="width:150px; font-weight:700">店名</td>
+          <td><input type="text" placeholder="例：有巢氏房屋 竹山加盟店"></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">業務姓名</td>
+          <td><input type="text" placeholder="例：王大明"></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">聯絡電話</td>
+          <td><input type="text" placeholder="例：049-XXX-XXXX"></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">LINE ID</td>
+          <td><input type="text" placeholder="例：@nesthouse_zhushan"></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">主打優勢</td>
+          <td><input type="text" placeholder="例：在地服務 20 年、成交率最高、免費估價"></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- ==================== PART 5: 龍蝦人設 (Soul & Agent) ==================== -->
+  <section>
+    <h2><span class="section-num">5</span> 龍蝦 AI 人設定義 <span class="tag tag-yellow">專業版</span></h2>
+    <p>「龍蝦」是您 LINE 官方帳號的 AI 對話機器人。以下設定將定義龍蝦的人格、語氣和對話策略。</p>
+
+    <div class="info-box">
+      <p>🦞 以下回答會用來產生兩個核心設定檔：<strong>soul.md</strong>（龍蝦的靈魂/人格）和 <strong>agent.md</strong>（龍蝦的行為策略）。</p>
+    </div>
+
+    <h3>5-1. 基本人設 → <span class="tag tag-yellow">soul.md</span></h3>
+
+    <div class="form-group">
+      <label>龍蝦的名字</label>
+      <div class="hint">LINE 官方帳號的顯示名稱</div>
+      <input type="text" placeholder="例：龍蝦、小蝦、房產蝦蝦、龍哥">
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦的性格特質（可複選）</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 親切溫暖</label>
+        <label class="option-item"><input type="checkbox"> 幽默風趣</label>
+        <label class="option-item"><input type="checkbox"> 專業可靠</label>
+        <label class="option-item"><input type="checkbox"> 熱情主動</label>
+        <label class="option-item"><input type="checkbox"> 沉穩有耐心</label>
+        <label class="option-item"><input type="checkbox"> 直接了當</label>
+        <label class="option-item"><input type="checkbox"> 像朋友一樣</label>
+        <label class="option-item"><input type="checkbox"> 年輕有活力</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦的說話風格</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="speak-style"> 正式禮貌（您好…請問…）</label>
+        <label class="option-item"><input type="radio" name="speak-style"> 輕鬆親切（嗨～想問一下…）</label>
+        <label class="option-item"><input type="radio" name="speak-style"> 專業但不死板</label>
+        <label class="option-item"><input type="radio" name="speak-style"> 在地口語（偏台語混用）</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦會使用 emoji 嗎？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="emoji"> 大量使用 🎉🏠✨</label>
+        <label class="option-item"><input type="radio" name="emoji"> 適度使用</label>
+        <label class="option-item"><input type="radio" name="emoji"> 幾乎不用</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦的自我介紹（用於第一次對話）</label>
+      <div class="example">
+        <strong>範例：</strong>「嗨～我是龍蝦 🦞 有巢氏房屋的智能小幫手！不管你是想買房、賣房還是看看行情，都可以問我喔！」
+      </div>
+      <textarea class="large" placeholder="請寫下龍蝦跟新用戶打招呼時要說的話..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦的背景故事（選填，讓對話更有溫度）</label>
+      <div class="example">
+        <strong>範例：</strong>「我是一隻住在竹山的龍蝦，從小就在這裡長大，對每條巷子都很熟悉！加入有巢氏房屋之後，就開始幫大家找理想的家 🏡」
+      </div>
+      <textarea placeholder="請寫下龍蝦的故事（可以天馬行空，重點是讓對話更有趣）..."></textarea>
+    </div>
+
+    <hr class="divider">
+
+    <h3>5-2. 對話策略 → <span class="tag tag-yellow">agent.md</span></h3>
+
+    <div class="form-group">
+      <label>龍蝦的主要任務目標（可複選）</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 蒐集屋主情報（售屋動機、底價、急迫度）</label>
+        <label class="option-item"><input type="checkbox"> 回答買方問題（行情、區域、推薦物件）</label>
+        <label class="option-item"><input type="checkbox"> 引導留下聯絡方式</label>
+        <label class="option-item"><input type="checkbox"> 預約帶看 / 估價</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦多積極地引導對話？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="aggressive"> 被動回答（用戶問什麼答什麼）</label>
+        <label class="option-item"><input type="radio" name="aggressive"> 適度引導（自然地帶入話題）</label>
+        <label class="option-item"><input type="radio" name="aggressive"> 積極引導（主動追問、挖掘需求）</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>何時轉接真人業務？</label>
+      <div class="hint">龍蝦判斷對方是潛在客戶時，可以轉接給真人處理</div>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 對方想預約帶看時</label>
+        <label class="option-item"><input type="checkbox"> 對方提到具體價格 / 出價時</label>
+        <label class="option-item"><input type="checkbox"> 對方情緒不佳 / 有客訴時</label>
+        <label class="option-item"><input type="checkbox"> 對方主動要求跟真人談</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦不能做的事 / 禁區（選填）</label>
+      <div class="hint">例如：不能代替業務承諾價格、不能透露公司內部資訊</div>
+      <textarea placeholder="請列出龍蝦絕對不能做的事..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>龍蝦的知識範圍</label>
+      <div class="hint">龍蝦能回答哪些話題？碰到超出範圍的問題怎麼辦？</div>
+      <div class="option-grid">
+        <label class="option-item"><input type="checkbox"> 在地房市行情</label>
+        <label class="option-item"><input type="checkbox"> 房屋貸款基礎知識</label>
+        <label class="option-item"><input type="checkbox"> 裝潢 / 驗屋常識</label>
+        <label class="option-item"><input type="checkbox"> 生活機能介紹（學校、市場等）</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>碰到不會的問題時，龍蝦怎麼回？</label>
+      <div class="example">
+        <strong>範例：</strong>「這個問題我不太確定欸，我幫你轉給專業的同事來回答好嗎？😊」
+      </div>
+      <textarea placeholder="請寫下龍蝦碰到不會的問題時的回應方式..."></textarea>
+    </div>
+  </section>
+
+
+  <!-- ==================== PART 6: 貼文模板 ==================== -->
+  <section>
+    <h2><span class="section-num">6</span> 社群貼文偏好 <span class="tag tag-yellow">專業版</span></h2>
+    <p>AI 會自動產生粉絲頁貼文，並產出社團貼文草稿供您審核後手動發布。</p>
+
+    <h3>6-1. 貼文風格</h3>
+
+    <div class="form-group">
+      <label>粉絲頁貼文的語氣風格？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="post-tone"> 專業知識型（市場分析、購屋教學）</label>
+        <label class="option-item"><input type="radio" name="post-tone"> 親切分享型（像朋友推薦）</label>
+        <label class="option-item"><input type="radio" name="post-tone"> 活潑吸睛型（多用 emoji、吸引點擊）</label>
+        <label class="option-item"><input type="radio" name="post-tone"> 混合（依內容類型調整）</label>
+      </div>
+    </div>
+
+    <h3>6-2. 貼文類型偏好</h3>
+    <p>AI 會混合發布不同類型的貼文，請調整您偏好的比例：</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>貼文類型</th>
+          <th>說明</th>
+          <th style="text-align:center; width:120px">希望佔比 %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🏠 物件推薦</strong></td>
+          <td>精選高分物件介紹</td>
+          <td><input type="text" style="text-align:center" placeholder="例：40%"></td>
+        </tr>
+        <tr>
+          <td><strong>📊 行情分析</strong></td>
+          <td>區域房價趨勢、市場觀察</td>
+          <td><input type="text" style="text-align:center" placeholder="例：25%"></td>
+        </tr>
+        <tr>
+          <td><strong>💡 購屋教學</strong></td>
+          <td>買房注意事項、房貸知識</td>
+          <td><input type="text" style="text-align:center" placeholder="例：20%"></td>
+        </tr>
+        <tr>
+          <td><strong>🎯 互動貼文</strong></td>
+          <td>投票、問答、心理測驗</td>
+          <td><input type="text" style="text-align:center" placeholder="例：15%"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>6-3. 發文頻率</h3>
+
+    <div class="form-group">
+      <label>粉絲頁希望多久發一次文？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="post-freq"> 每天 1 篇</label>
+        <label class="option-item"><input type="radio" name="post-freq"> 每週 3-4 篇</label>
+        <label class="option-item"><input type="radio" name="post-freq"> 每週 1-2 篇</label>
+        <label class="option-item"><input type="radio" name="post-freq"> 有好物件才發</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>社團貼文草稿希望多久收到？</label>
+      <div class="option-grid">
+        <label class="option-item"><input type="radio" name="draft-freq"> 每天推送草稿</label>
+        <label class="option-item"><input type="radio" name="draft-freq"> 每週 2-3 次</label>
+        <label class="option-item"><input type="radio" name="draft-freq"> 每週 1 次</label>
+      </div>
+    </div>
+
+    <h3>6-4. 貼文範例（選填）</h3>
+
+    <div class="form-group">
+      <label>如果您有過去發過的貼文範例，請貼在這裡讓 AI 學習風格</label>
+      <textarea class="large" placeholder="請貼上 1-3 篇您過去在粉絲頁或社團發過的貼文..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>貼文中要固定出現的資訊（選填）</label>
+      <div class="hint">例如：每篇結尾都要加「📞 聯絡電話：049-XXX-XXXX」</div>
+      <textarea placeholder="例如固定的 hashtag、聯絡方式、免責聲明..."></textarea>
+    </div>
+  </section>
+
+
+  <!-- ==================== PART 7: 其他需求 ==================== -->
+  <section>
+    <h2><span class="section-num">7</span> 其他補充</h2>
+
+    <div class="form-group">
+      <label>有沒有其他想法或需求？</label>
+      <textarea class="large" placeholder="任何想法都歡迎寫下來，我們會評估可行性..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>指定聯絡人與聯絡方式</label>
+      <table>
+        <tbody>
+          <tr>
+            <td style="width:120px; font-weight:700">姓名</td>
+            <td><input type="text" placeholder="系統對接的主要聯絡人"></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">電話</td>
+            <td><input type="text" placeholder="手機號碼"></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">LINE</td>
+            <td><input type="text" placeholder="LINE ID 或掃碼加入"></td>
+          </tr>
+          <tr>
+            <td style="font-weight:700">Email</td>
+            <td><input type="text" placeholder="信箱"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <div class="report-footer">
+    <p>📋 本問卷由 AI 房仲智能助理開發團隊提供</p>
+    <p>請填寫完畢後交回，我們將依據您的回覆進行系統客製化設定</p>
+    <p style="margin-top:10px; font-size:12px; color: var(--gray-500);">文件版本 v1.0 ｜ 2026-03-20</p>
+  </div>
+
+</div>
+</body>
+</html>
