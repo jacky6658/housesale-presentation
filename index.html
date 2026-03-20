@@ -564,6 +564,37 @@
             border: 3px solid #f39c12;
         }
 
+        /* Screenshot page styles */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .screenshot-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 8px 12px;
+            background: #1a365d;
+            color: white;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
         /* Comparison table styles */
         .compare-table tr:hover td {
             background: #e8f4f8 !important;
@@ -698,10 +729,19 @@
             /* Pricing card - remove scale */
             .card[style*="transform: scale"] { transform: none !important; }
 
-            /* Screenshot grid - single column */
-            div[style*="grid-template-columns: 1fr 1fr; gap: 20px"] {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
+            /* Screenshot grid - 2 columns on mobile */
+            .screenshot-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+
+            .screenshot-card img {
+                height: 100px !important;
+            }
+
+            .screenshot-caption {
+                padding: 5px 8px !important;
+                font-size: 0.7em !important;
             }
 
             /* Inline font-size overrides */
@@ -1475,51 +1515,51 @@
 </div>
 
 <!-- 第 9.5 頁：Step1ne 系統實際截圖 -->
-<div class="slide">
+<div class="slide screenshot-slide">
     <h2>Step1ne 系統實際畫面</h2>
     <p class="subtitle">已上線運作中 — 以下為系統真實截圖</p>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <img src="pic/step1ne-overview.png" alt="Step1ne 總攬看板" style="width: 100%; display: block;">
-            <div style="padding: 12px 15px; background: #1a365d; color: white;">
-                <strong>總攬看板</strong> — 全團隊顧問績效、Pipeline 進度一覽（1,778 位候選人）
+    <div class="screenshot-grid">
+        <div class="screenshot-card">
+            <img src="pic/step1ne-overview.png" alt="Step1ne 總攬看板">
+            <div class="screenshot-caption">
+                <strong>總攬看板</strong> — 全團隊顧問績效、Pipeline 進度一覽
             </div>
         </div>
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <img src="pic/step1ne-ops-dashboard.png" alt="Step1ne 運營儀表板" style="width: 100%; display: block;">
-            <div style="padding: 12px 15px; background: #1a365d; color: white;">
+        <div class="screenshot-card">
+            <img src="pic/step1ne-ops-dashboard.png" alt="Step1ne 運營儀表板">
+            <div class="screenshot-caption">
                 <strong>運營儀表板</strong> — 招募漏斗、每週匯入人數、轉換率追蹤
             </div>
         </div>
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <img src="pic/step1ne-candidates.png" alt="Step1ne 候選人總表" style="width: 100%; display: block;">
-            <div style="padding: 12px 15px; background: #1a365d; color: white;">
-                <strong>候選人總表</strong> — AI 自動評分、多平台來源（LinkedIn / GitHub / Email）
+        <div class="screenshot-card">
+            <img src="pic/step1ne-candidates.png" alt="Step1ne 候選人總表">
+            <div class="screenshot-caption">
+                <strong>候選人總表</strong> — AI 自動評分、多平台來源
             </div>
         </div>
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <img src="pic/step1ne-talent-map.png" alt="Step1ne 人才地圖" style="width: 100%; display: block;">
-            <div style="padding: 12px 15px; background: #1a365d; color: white;">
-                <strong>人才地圖</strong> — Grade 分佈、公司來源 TOP 10、薪資與年資分析
+        <div class="screenshot-card">
+            <img src="pic/step1ne-talent-map.png" alt="Step1ne 人才地圖">
+            <div class="screenshot-caption">
+                <strong>人才地圖</strong> — Grade 分佈、公司來源 TOP 10
             </div>
         </div>
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <img src="pic/step1ne-sop.png" alt="Step1ne 顧問 SOP 手冊" style="width: 100%; display: block;">
-            <div style="padding: 12px 15px; background: #1a365d; color: white;">
-                <strong>顧問 SOP 手冊</strong> — 獵頭 Playbook、Pipeline 階段、日常工作流程
+        <div class="screenshot-card">
+            <img src="pic/step1ne-sop.png" alt="Step1ne 顧問 SOP 手冊">
+            <div class="screenshot-caption">
+                <strong>顧問 SOP 手冊</strong> — 獵頭 Playbook、日常工作流程
             </div>
         </div>
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-            <img src="pic/step1ne-learning.png" alt="Step1ne 學習中心" style="width: 100%; display: block;">
-            <div style="padding: 12px 15px; background: #1a365d; color: white;">
-                <strong>學習中心</strong> — 30 天培訓課程、產業知識庫、Prompt 工具箱
+        <div class="screenshot-card">
+            <img src="pic/step1ne-learning.png" alt="Step1ne 學習中心">
+            <div class="screenshot-caption">
+                <strong>學習中心</strong> — 30 天培訓課程、產業知識庫
             </div>
         </div>
     </div>
 
-    <div style="background: #fce4ec; padding: 15px 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
-        <strong style="color: #ad1457;">以上為 Step1ne 獵頭系統真實運作畫面，房仲系統將採用相同核心架構，針對不動產業務需求客製化開發。</strong>
+    <div style="background: #fce4ec; padding: 12px 20px; border-radius: 12px; margin-top: 15px; text-align: center;">
+        <strong style="color: #ad1457; font-size: 0.95em;">以上為 Step1ne 獵頭系統真實運作畫面，房仲系統將採用相同核心架構，針對不動產業務需求客製化開發。</strong>
     </div>
 </div>
 
@@ -1763,7 +1803,7 @@ function applyMobileStyles() {
     if (window.innerWidth <= 768) {
         // Force all grids to single column
         document.querySelectorAll('.grid-2, .grid-3, .grid-4').forEach(el => {
-            if (!el.closest('.flow-diagram')) {
+            if (!el.closest('.flow-diagram') && !el.classList.contains('screenshot-grid')) {
                 el.style.display = 'block';
                 Array.from(el.children).forEach(child => {
                     child.style.marginBottom = '10px';
@@ -1773,7 +1813,7 @@ function applyMobileStyles() {
 
         // Force inline grid elements to single column
         document.querySelectorAll('[style*="grid-template-columns"]').forEach(el => {
-            if (!el.classList.contains('compare-table') && !el.closest('.flow-diagram')) {
+            if (!el.classList.contains('compare-table') && !el.closest('.flow-diagram') && !el.classList.contains('screenshot-grid')) {
                 el.style.display = 'block';
                 Array.from(el.children).forEach(child => {
                     child.style.marginBottom = '10px';
